@@ -15,6 +15,20 @@ export default function AdminCategories({
   onGoContractors,
   onLogout,
 }) {
+  const buildAdminErrorMessage = (response, data, fallback) => {
+    if (response?.status === 502 || response?.status === 503) {
+      return "خدمة التصنيفات غير متاحة الآن (Listing Service). حاول مرة أخرى بعد قليل.";
+    }
+    const detail = typeof data?.detail === "string" ? data.detail : "";
+    if (detail.toLowerCase().includes("bad gateway")) {
+      return "الخدمة الخلفية غير متاحة الآن. حاول مرة أخرى بعد قليل.";
+    }
+    if (Array.isArray(data?.name) && data.name[0]) {
+      return data.name[0];
+    }
+    return fallback;
+  };
+
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -38,9 +52,14 @@ export default function AdminCategories({
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/categories/", {
         headers: { Authorization: `Bearer ${access}` },
       });
-      const data = await response.json();
+      let data = null;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
       if (!response.ok) {
-        throw new Error(data?.detail || "Failed to load categories");
+        throw new Error(buildAdminErrorMessage(response, data, "Failed to load categories"));
       }
       setCategories(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -72,10 +91,14 @@ export default function AdminCategories({
         },
         body: JSON.stringify({ name }),
       });
-      const data = await response.json();
+      let data = null;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
       if (!response.ok) {
-        const apiError = data?.name?.[0] || data?.detail || "Failed to add category";
-        throw new Error(apiError);
+        throw new Error(buildAdminErrorMessage(response, data, "Failed to add category"));
       }
       setCategories((prev) => [...prev, data].sort((a, b) => Number(a.id) - Number(b.id)));
       setNewName("");
@@ -104,10 +127,14 @@ export default function AdminCategories({
         },
         body: JSON.stringify({ name }),
       });
-      const data = await response.json();
+      let data = null;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
       if (!response.ok) {
-        const apiError = data?.name?.[0] || data?.detail || "Failed to update category";
-        throw new Error(apiError);
+        throw new Error(buildAdminErrorMessage(response, data, "Failed to update category"));
       }
       setCategories((prev) =>
         prev.map((item) => (Number(item.id) === Number(editingId) ? data : item))
@@ -133,13 +160,13 @@ export default function AdminCategories({
         headers: { Authorization: `Bearer ${access}` },
       });
       if (!response.ok) {
-        let data = {};
+        let data = null;
         try {
           data = await response.json();
         } catch {
-          data = {};
+          data = null;
         }
-        throw new Error(data?.detail || "Failed to delete category");
+        throw new Error(buildAdminErrorMessage(response, data, "Failed to delete category"));
       }
       setCategories((prev) => prev.filter((item) => Number(item.id) !== Number(categoryId)));
       setSuccess("Category deleted successfully.");

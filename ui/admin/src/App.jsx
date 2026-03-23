@@ -77,6 +77,11 @@ export default function App() {
     });
   };
 
+  const buildAuthHeaders = () => {
+    const access = localStorage.getItem("admin_access");
+    return access ? { Authorization: `Bearer ${access}` } : {};
+  };
+
   useEffect(() => {
     const handlePop = () => setRoute(getPath());
     window.addEventListener("popstate", handlePop);
@@ -92,40 +97,13 @@ export default function App() {
   }, [authUser, route]);
 
   useEffect(() => {
-    const access = localStorage.getItem("admin_access");
-    if (!access) return;
-
-    const verify = async () => {
-      try {
-        const response = await fetchWithFallback(AUTH_BASE_URLS, "/me/", {
-          headers: { Authorization: `Bearer ${access}` },
-        });
-        if (!response.ok) throw new Error("Session expired");
-        const data = await response.json();
-        if (Number(data.role_id) !== ADMIN_ROLE_ID) {
-          throw new Error("You are not authorized as admin.");
-        }
-        setAuthUser(data);
-      } catch {
-        localStorage.removeItem("admin_access");
-        localStorage.removeItem("admin_refresh");
-        localStorage.removeItem("admin_user");
-        setAuthUser(null);
-      }
-    };
-
-    verify();
-  }, []);
-
-  useEffect(() => {
     if (!authUser) return;
     const loadListings = async () => {
       setListingsError("");
       setListingsLoading(true);
       try {
-        const access = localStorage.getItem("admin_access");
         const response = await fetchWithFallback(ADMIN_BASE_URLS, "/listings/", {
-          headers: { Authorization: `Bearer ${access}` },
+          headers: buildAuthHeaders(),
         });
         const data = await response.json();
         if (!response.ok) {
@@ -146,9 +124,8 @@ export default function App() {
     if (!authUser) return;
     const loadStatuses = async () => {
       try {
-        const access = localStorage.getItem("admin_access");
         const response = await fetchWithFallback(ADMIN_BASE_URLS, "/statuses/", {
-          headers: { Authorization: `Bearer ${access}` },
+          headers: buildAuthHeaders(),
         });
         const data = await response.json();
         if (!response.ok) {
@@ -226,12 +203,11 @@ export default function App() {
     setActionError("");
     setActionSuccess("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/properties/${listing.id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${access}`,
+          ...buildAuthHeaders(),
         },
         body: JSON.stringify({ status: statusId }),
       });
