@@ -32,6 +32,10 @@ services:
         value: "user_registered"
       - key: ADMIN_ROLE_ID
         value: "4"
+      - key: DB_SSLMODE
+        value: "require"
+      - key: DB_CONNECT_TIMEOUT
+        value: "10"
 
   - type: web
     name: account-service
@@ -99,7 +103,7 @@ services:
       - key: JWT_ALG
         value: "HS256"
       - key: AUTH_BASE_URLS
-        value: "REPLACE_ME"
+        value: "https://auth-service-56qw.onrender.com"
       - key: ADMIN_ROLE_ID
         value: "4"
       - key: CLOUDINARY_URL
@@ -166,6 +170,8 @@ services:
         value: "HS256"
       - key: ADMIN_ROLE_ID
         value: "4"
+      - key: AUTH_BASE_URLS
+        value: "https://auth-service-56qw.onrender.com"
       - key: LISTING_BASE_URLS
         value: "https://listing-service-8h0f.onrender.com"
 
