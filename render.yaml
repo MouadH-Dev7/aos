@@ -90,6 +90,10 @@ services:
         value: "REPLACE_ME"
       - key: DB_PORT
         value: "5432"
+      - key: DB_SSLMODE
+        value: "require"
+      - key: DB_CONNECT_TIMEOUT
+        value: "10"
       - key: JWT_SECRET
         value: "REPLACE_ME"
       - key: JWT_ALG
@@ -124,6 +128,10 @@ services:
         value: "REPLACE_ME"
       - key: DB_PORT
         value: "5432"
+      - key: DB_SSLMODE
+        value: "require"
+      - key: DB_CONNECT_TIMEOUT
+        value: "10"
 
   - type: web
     name: admin-validation-service
@@ -148,12 +156,18 @@ services:
         value: "REPLACE_ME"
       - key: DB_PORT
         value: "5432"
+      - key: DB_SSLMODE
+        value: "require"
+      - key: DB_CONNECT_TIMEOUT
+        value: "10"
       - key: JWT_SECRET
         value: "REPLACE_ME"
       - key: JWT_ALG
         value: "HS256"
       - key: ADMIN_ROLE_ID
         value: "4"
+      - key: LISTING_BASE_URLS
+        value: "https://listing-service-8h0f.onrender.com"
 
   - type: worker
     name: notification-worker
