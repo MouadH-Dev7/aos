@@ -1,0 +1,127 @@
+services:
+  traefik:
+    image: traefik:v2.11
+    command:
+      - "--configFile=/etc/traefik/traefik.yml"
+    ports:
+      - "8080:80"
+      - "8081:8080"
+    volumes:
+      - "./infra/traefik/traefik.yml:/etc/traefik/traefik.yml:ro"
+    depends_on:
+      - consul
+
+  consul:
+    image: consul:1.15
+    command: "agent -dev -client=0.0.0.0"
+    ports:
+      - "8500:8500"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  auth-service:
+    build: ./services/auth-service
+    env_file:
+      - ./services/auth-service/.env
+    environment:
+      DB_HOST: host.docker.internal
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+      USER_REGISTERED_QUEUE: user_registered
+      CONSUL_HTTP_ADDR: http://consul:8500
+      SERVICE_NAME: auth-service
+      SERVICE_HOST: auth-service
+      SERVICE_PORT: "8000"
+    ports:
+      - "8001:8000"
+    depends_on:
+      - rabbitmq
+
+  account-service:
+    build: ./services/account-service
+    env_file:
+      - ./services/account-service/.env
+    environment:
+      DB_HOST: host.docker.internal
+      CONSUL_HTTP_ADDR: http://consul:8500
+      SERVICE_NAME: account-service
+      SERVICE_HOST: account-service
+      SERVICE_PORT: "8000"
+    ports:
+      - "8002:8000"
+
+  location-service:
+    build: ./services/location-service
+    env_file:
+      - ./services/location-service/.env
+    environment:
+      DB_HOST: host.docker.internal
+      CONSUL_HTTP_ADDR: http://consul:8500
+      SERVICE_NAME: location-service
+      SERVICE_HOST: location-service
+      SERVICE_PORT: "8000"
+    ports:
+      - "8003:8000"
+
+  listing-service:
+    build: ./services/listing-service
+    env_file:
+      - ./services/listing-service/.env
+    environment:
+      DB_HOST: host.docker.internal
+      CONSUL_HTTP_ADDR: http://consul:8500
+      SERVICE_NAME: listing-service
+      SERVICE_HOST: listing-service
+      SERVICE_PORT: "8000"
+    ports:
+      - "8004:8000"
+
+  admin-validation-service:
+    build: ./services/admin-validation-service
+    env_file:
+      - ./services/admin-validation-service/.env
+    environment:
+      DB_HOST: host.docker.internal
+      CONSUL_HTTP_ADDR: http://consul:8500
+      SERVICE_NAME: admin-validation-service
+      SERVICE_HOST: admin-validation-service
+      SERVICE_PORT: "8000"
+    ports:
+      - "8005:8000"
+
+  notification-worker:
+    build: ./services/notification-worker
+    environment:
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+      USER_REGISTERED_QUEUE: user_registered
+    depends_on:
+      - rabbitmq
+
+  ui-web:
+    build: ./ui/web
+    environment:
+      VITE_AUTH_BASE_URL: http://localhost:8080/api/auth
+      VITE_ACCOUNT_BASE_URL: http://localhost:8080/api/account
+      VITE_LOCATION_BASE_URL: http://localhost:8080/api/location
+      VITE_LISTING_BASE_URL: http://localhost:8080/api/listing
+    ports:
+      - "5173:5173"
+    depends_on:
+      - traefik
+
+  ui-admin:
+    build: ./ui/admin
+    environment:
+      VITE_AUTH_BASE_URL: http://localhost:8080/api/auth
+      VITE_ACCOUNT_BASE_URL: http://localhost:8080/api/account
+      VITE_LOCATION_BASE_URL: http://localhost:8080/api/location
+      VITE_LISTING_BASE_URL: http://localhost:8080/api/listing
+    ports:
+      - "5174:5174"
+    depends_on:
+      - traefik
+
+volumes: {}
