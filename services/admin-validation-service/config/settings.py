@@ -76,23 +76,9 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME", ""),
-        "USER": os.getenv("DB_USER", "postgres"),
-        "PASSWORD": os.getenv("DB_PASSWORD", "postgres"),
-        "HOST": os.getenv("DB_HOST", "localhost"),
-        "PORT": os.getenv("DB_PORT", "5432"),
-        "CONN_MAX_AGE": int(os.getenv("DB_CONN_MAX_AGE", "120")),
-        "OPTIONS": {},
+        "ENGINE": "django.db.backends.dummy",
     }
 }
-
-db_sslmode = os.getenv("DB_SSLMODE", "").strip()
-db_connect_timeout = os.getenv("DB_CONNECT_TIMEOUT", "").strip()
-if db_sslmode:
-    DATABASES["default"]["OPTIONS"]["sslmode"] = db_sslmode
-if db_connect_timeout:
-    DATABASES["default"]["OPTIONS"]["connect_timeout"] = int(db_connect_timeout)
 
 LANGUAGE_CODE = "fr-fr"
 TIME_ZONE = "Africa/Algiers"

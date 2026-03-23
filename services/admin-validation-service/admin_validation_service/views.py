@@ -7,9 +7,6 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from admin_validation_service.models import PropertyReview
-
-
 ADMIN_ROLE_ID = 4
 
 
@@ -169,14 +166,6 @@ class AdminPropertyDetailView(APIView):
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
         data, code = _forward("PATCH", f"/properties/{pk}/", body=request_obj.data)
-        if code < 400:
-            decision = f"status:{request_obj.data.get('status')}"
-            PropertyReview.objects.create(
-                property_id=pk,
-                admin_user_id=admin_user_id,
-                decision=decision[:20],
-                note="Updated from admin-validation-service",
-            )
         return Response(data, status=code)
 
 
