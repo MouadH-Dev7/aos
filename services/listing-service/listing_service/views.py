@@ -166,7 +166,7 @@ class PropertyListView(ListAPIView):
                         with request.urlopen(url, timeout=5) as resp:
                             data = json.loads(resp.read().decode("utf-8") or "{}")
                             ids = data.get("user_ids") or []
-                            return {int(item) for item in ids}
+                            return {int(item) for item in ids}, True
                     except Exception as exc:
                         last_exc = exc
                         if attempt < 1:
@@ -175,8 +175,8 @@ class PropertyListView(ListAPIView):
                     raise last_exc
             except Exception:
                 continue
-        # Fail-closed for public visibility when auth-service is unavailable.
-        return set()
+        # Auth service unreachable; skip owner filtering to avoid empty public results.
+        return set(), False
 
     def get_queryset(self):
         queryset = Property.objects.all().order_by("-created_at")
@@ -205,8 +205,9 @@ class PropertyListView(ListAPIView):
             )
 
         if not include_all:
-            active_public_user_ids = self._fetch_active_public_user_ids()
-            queryset = queryset.filter(user_id__in=active_public_user_ids)
+            active_public_user_ids, auth_ok = self._fetch_active_public_user_ids()
+            if auth_ok:
+                queryset = queryset.filter(user_id__in=active_public_user_ids)
         return queryset
 
 
