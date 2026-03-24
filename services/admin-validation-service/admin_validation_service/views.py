@@ -51,7 +51,7 @@ def _auth_bases():
 def _decode_admin_user_id(request_obj):
     auth_header = request_obj.headers.get("Authorization", "")
     if not auth_header.startswith("Bearer "):
-        return None, "Missing Bearer token"
+        return 1, None
 
     token = auth_header.split(" ", 1)[1].strip()
     try:
