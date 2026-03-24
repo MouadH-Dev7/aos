@@ -82,11 +82,28 @@ export default function App() {
     return access ? { Authorization: `Bearer ${access}` } : {};
   };
 
+  const readStoredUser = () => {
+    try {
+      const raw = localStorage.getItem("admin_user");
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  };
+
   useEffect(() => {
     const handlePop = () => setRoute(getPath());
     window.addEventListener("popstate", handlePop);
     return () => window.removeEventListener("popstate", handlePop);
   }, []);
+
+  useEffect(() => {
+    if (authUser) return;
+    const storedUser = readStoredUser();
+    if (storedUser) {
+      setAuthUser(storedUser);
+    }
+  }, [authUser]);
 
   const routeInfo = useMemo(() => parseRoute(route), [route]);
 
@@ -168,8 +185,17 @@ export default function App() {
       if (Number(data?.user?.role_id) !== ADMIN_ROLE_ID) {
         throw new Error("This account is not an admin.");
       }
-      localStorage.setItem("admin_access", data.access);
-      localStorage.setItem("admin_refresh", data.refresh);
+      const accessToken = data?.access || data?.access_token || data?.token;
+      const refreshToken = data?.refresh || data?.refresh_token;
+      if (!accessToken) {
+        throw new Error("Login succeeded but access token is missing.");
+      }
+      localStorage.setItem("admin_access", accessToken);
+      if (refreshToken) {
+        localStorage.setItem("admin_refresh", refreshToken);
+      } else {
+        localStorage.removeItem("admin_refresh");
+      }
       localStorage.setItem("admin_user", JSON.stringify(data.user));
       setAuthUser(data.user);
       if (route === "/") {
