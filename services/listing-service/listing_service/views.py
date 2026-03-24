@@ -189,12 +189,8 @@ class PropertyListView(ListAPIView):
             "yes",
         )
         if include_all:
-            payload, err = PropertyCreateView._auth_payload(self.request)
-            if err:
-                raise NotAuthenticated(err)
-            role_id = int(payload.get("role_id") or 0)
-            if role_id != int(os.getenv("ADMIN_ROLE_ID", "4")):
-                raise PermissionDenied("Admin role is required.")
+            # Auth disabled: allow admin listings without a token.
+            pass
         if user_id:
             queryset = queryset.filter(user_id=user_id)
         if status_name:
