@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-import { ADMIN_BASE_URLS, fetchWithFallback } from "../api.js";
+import { ADMIN_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "../api.js";
 
 export default function AdminDocumentTypes({
   user,
@@ -34,9 +34,8 @@ export default function AdminDocumentTypes({
     setLoading(true);
     setError("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/document-types/", {
-        headers: { Authorization: `Bearer ${access}` },
+        headers: getAdminAuthHeaders(),
       });
       const data = await response.json();
       if (!response.ok) {
@@ -63,12 +62,11 @@ export default function AdminDocumentTypes({
     setError("");
     setSuccess("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/document-types/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${access}`,
+          ...getAdminAuthHeaders(),
         },
         body: JSON.stringify({ name }),
       });
@@ -95,12 +93,11 @@ export default function AdminDocumentTypes({
     setError("");
     setSuccess("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/document-types/${editingId}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${access}`,
+          ...getAdminAuthHeaders(),
         },
         body: JSON.stringify({ name }),
       });
@@ -127,10 +124,9 @@ export default function AdminDocumentTypes({
     setError("");
     setSuccess("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/document-types/${documentTypeId}/`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${access}` },
+        headers: getAdminAuthHeaders(),
       });
       if (!response.ok) {
         let data = {};

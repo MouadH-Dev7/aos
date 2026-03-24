@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-import { ADMIN_BASE_URLS, fetchWithFallback } from "../api.js";
+import { ADMIN_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "../api.js";
 
 export default function AdminAmenities({
   user,
@@ -35,9 +35,8 @@ export default function AdminAmenities({
     setLoading(true);
     setError("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/amenities/", {
-        headers: { Authorization: `Bearer ${access}` },
+        headers: getAdminAuthHeaders(),
       });
       const data = await response.json();
       if (!response.ok) {
@@ -64,12 +63,11 @@ export default function AdminAmenities({
     setError("");
     setSuccess("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/amenities/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${access}`,
+          ...getAdminAuthHeaders(),
         },
         body: JSON.stringify({ name }),
       });
@@ -96,12 +94,11 @@ export default function AdminAmenities({
     setError("");
     setSuccess("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/amenities/${editingId}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${access}`,
+          ...getAdminAuthHeaders(),
         },
         body: JSON.stringify({ name }),
       });
@@ -132,10 +129,9 @@ export default function AdminAmenities({
     setError("");
     setSuccess("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/amenities/${amenityId}/`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${access}` },
+        headers: getAdminAuthHeaders(),
       });
       if (!response.ok) {
         if (response.status === 404) {

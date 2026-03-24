@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-import { ADMIN_BASE_URLS, fetchWithFallback } from "../api.js";
+import { ADMIN_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "../api.js";
 
 export default function AdminCategories({
   user,
@@ -48,9 +48,8 @@ export default function AdminCategories({
     setLoading(true);
     setError("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/categories/", {
-        headers: { Authorization: `Bearer ${access}` },
+        headers: getAdminAuthHeaders(),
       });
       let data = null;
       try {
@@ -82,12 +81,11 @@ export default function AdminCategories({
     setError("");
     setSuccess("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/categories/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${access}`,
+          ...getAdminAuthHeaders(),
         },
         body: JSON.stringify({ name }),
       });
@@ -118,12 +116,11 @@ export default function AdminCategories({
     setError("");
     setSuccess("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/categories/${editingId}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${access}`,
+          ...getAdminAuthHeaders(),
         },
         body: JSON.stringify({ name }),
       });
@@ -154,10 +151,9 @@ export default function AdminCategories({
     setError("");
     setSuccess("");
     try {
-      const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/categories/${categoryId}/`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${access}` },
+        headers: getAdminAuthHeaders(),
       });
       if (!response.ok) {
         let data = null;

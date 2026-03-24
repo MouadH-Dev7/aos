@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./index.css";
 
-import { ADMIN_BASE_URLS, AUTH_BASE_URLS, fetchWithFallback } from "./api.js";
+import { ADMIN_BASE_URLS, AUTH_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "./api.js";
 import AdminLogin from "./pages/AdminLogin.jsx";
 import AdminDashboard from "./pages/Dashboard.jsx";
 import AdminListings from "./pages/Listings.jsx";
@@ -77,10 +77,7 @@ export default function App() {
     });
   };
 
-  const buildAuthHeaders = () => {
-    const access = localStorage.getItem("admin_access");
-    return access ? { Authorization: `Bearer ${access}` } : {};
-  };
+  const buildAuthHeaders = () => getAdminAuthHeaders();
 
   const readStoredUser = () => {
     try {

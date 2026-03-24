@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-import { ADMIN_BASE_URLS, fetchWithFallback } from "../api.js";
+import { ADMIN_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "../api.js";
 
 export default function AdminPropertyDetails({
   listing,
@@ -54,9 +54,8 @@ export default function AdminPropertyDetails({
       setLoading(true);
       setError("");
       try {
-        const access = localStorage.getItem("admin_access");
         const response = await fetchWithFallback(ADMIN_BASE_URLS, "/listings/", {
-          headers: { Authorization: `Bearer ${access}` },
+          headers: getAdminAuthHeaders(),
         });
         const data = await response.json();
         if (!response.ok) {
@@ -77,11 +76,10 @@ export default function AdminPropertyDetails({
     if (!currentListing?.id) return;
     const loadContacts = async () => {
       try {
-        const access = localStorage.getItem("admin_access");
         const response = await fetchWithFallback(
           ADMIN_BASE_URLS,
           `/properties/${currentListing.id}/contacts/`,
-          { headers: { Authorization: `Bearer ${access}` } }
+          { headers: getAdminAuthHeaders() }
         );
         const data = await response.json();
         if (!response.ok) {
