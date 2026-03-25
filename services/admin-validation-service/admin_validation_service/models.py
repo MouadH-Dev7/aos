@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.db import models
 
 
@@ -11,6 +10,3 @@ class PropertyReview(models.Model):
 
     class Meta:
         db_table = "Property_Reviews"
-=======
-"""Models intentionally removed to avoid database dependency."""
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e

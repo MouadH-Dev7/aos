@@ -2,8 +2,5 @@ Django>=5.0
 djangorestframework>=3.15
 PyJWT>=2.8
 psycopg[binary]>=3.2
-<<<<<<< HEAD
 django-prometheus>=2.3
-=======
 gunicorn>=21.2
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e

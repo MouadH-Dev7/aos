@@ -7,12 +7,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-<<<<<<< HEAD
 from admin_validation_service.models import PropertyReview
 
 
-=======
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 ADMIN_ROLE_ID = 4
 
 
@@ -57,11 +54,7 @@ def _auth_bases():
 def _decode_admin_user_id(request_obj):
     auth_header = request_obj.headers.get("Authorization", "")
     if not auth_header.startswith("Bearer "):
-<<<<<<< HEAD
         return None, "Missing Bearer token"
-=======
-        return 1, None
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
     token = auth_header.split(" ", 1)[1].strip()
     try:
@@ -128,7 +121,6 @@ def _forward(method, path, query_params=None, body=None, bases=None, extra_heade
     return {"detail": f"Listing service unreachable: {last_network_error or 'unknown'}"}, 503
 
 
-<<<<<<< HEAD
 def _forward_listing(method, path, request_obj, query_params=None, body=None):
     auth_header = request_obj.headers.get("Authorization", "")
     headers = {"Authorization": auth_header} if auth_header else None
@@ -142,8 +134,6 @@ def _forward_listing(method, path, request_obj, query_params=None, body=None):
     )
 
 
-=======
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 def _forward_auth(method, path, request_obj, query_params=None, body=None):
     auth_header = request_obj.headers.get("Authorization", "")
     headers = {"Authorization": auth_header} if auth_header else None
@@ -171,11 +161,7 @@ class AdminPropertyListView(APIView):
         ):
             query["include_all"] = "1"
 
-<<<<<<< HEAD
         data, code = _forward_listing("GET", "/properties/list/", request_obj, query_params=query)
-=======
-        data, code = _forward("GET", "/properties/list/", query_params=query)
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
 
@@ -185,11 +171,7 @@ class AdminStatusListView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("GET", "/statuses/", request_obj)
-=======
-        data, code = _forward("GET", "/statuses/")
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
 
@@ -199,7 +181,6 @@ class AdminPropertyDetailView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("PATCH", f"/properties/{pk}/", request_obj, body=request_obj.data)
         if code < 400:
             decision = f"status:{request_obj.data.get('status')}"
@@ -209,9 +190,6 @@ class AdminPropertyDetailView(APIView):
                 decision=decision[:20],
                 note="Updated from admin-validation-service",
             )
-=======
-        data, code = _forward("PATCH", f"/properties/{pk}/", body=request_obj.data)
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
 
@@ -221,11 +199,7 @@ class AdminPropertyContactListView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("GET", f"/properties/{property_id}/contacts/", request_obj)
-=======
-        data, code = _forward("GET", f"/properties/{property_id}/contacts/")
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
 
@@ -235,11 +209,7 @@ class AdminCategoryListView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("GET", "/categories/", request_obj)
-=======
-        data, code = _forward("GET", "/categories/")
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
     def post(self, request_obj):
@@ -247,11 +217,7 @@ class AdminCategoryListView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("POST", "/categories/", request_obj, body=request_obj.data)
-=======
-        data, code = _forward("POST", "/categories/", body=request_obj.data)
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
 
@@ -261,11 +227,7 @@ class AdminCategoryDetailView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("PATCH", f"/categories/{pk}/", request_obj, body=request_obj.data)
-=======
-        data, code = _forward("PATCH", f"/categories/{pk}/", body=request_obj.data)
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
     def delete(self, request_obj, pk):
@@ -273,11 +235,7 @@ class AdminCategoryDetailView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("DELETE", f"/categories/{pk}/", request_obj)
-=======
-        data, code = _forward("DELETE", f"/categories/{pk}/")
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         if data is None:
             return Response(status=code)
         return Response(data, status=code)
@@ -289,11 +247,7 @@ class AdminTypeListView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("GET", "/types/", request_obj)
-=======
-        data, code = _forward("GET", "/types/")
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
     def post(self, request_obj):
@@ -301,11 +255,7 @@ class AdminTypeListView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("POST", "/types/", request_obj, body=request_obj.data)
-=======
-        data, code = _forward("POST", "/types/", body=request_obj.data)
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
 
@@ -315,11 +265,7 @@ class AdminTypeDetailView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("PATCH", f"/types/{pk}/", request_obj, body=request_obj.data)
-=======
-        data, code = _forward("PATCH", f"/types/{pk}/", body=request_obj.data)
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
     def delete(self, request_obj, pk):
@@ -327,11 +273,7 @@ class AdminTypeDetailView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("DELETE", f"/types/{pk}/", request_obj)
-=======
-        data, code = _forward("DELETE", f"/types/{pk}/")
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         if data is None:
             return Response(status=code)
         return Response(data, status=code)
@@ -343,11 +285,7 @@ class AdminAmenityListView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("GET", "/amenities/", request_obj)
-=======
-        data, code = _forward("GET", "/amenities/")
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
     def post(self, request_obj):
@@ -355,11 +293,7 @@ class AdminAmenityListView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("POST", "/amenities/", request_obj, body=request_obj.data)
-=======
-        data, code = _forward("POST", "/amenities/", body=request_obj.data)
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
 
@@ -369,11 +303,7 @@ class AdminAmenityDetailView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("PATCH", f"/amenities/{pk}/", request_obj, body=request_obj.data)
-=======
-        data, code = _forward("PATCH", f"/amenities/{pk}/", body=request_obj.data)
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
     def delete(self, request_obj, pk):
@@ -381,11 +311,7 @@ class AdminAmenityDetailView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("DELETE", f"/amenities/{pk}/", request_obj)
-=======
-        data, code = _forward("DELETE", f"/amenities/{pk}/")
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         if data is None:
             return Response(status=code)
         return Response(data, status=code)
@@ -397,11 +323,7 @@ class AdminDocumentTypeListView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("GET", "/document-types/", request_obj)
-=======
-        data, code = _forward("GET", "/document-types/")
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
     def post(self, request_obj):
@@ -409,11 +331,7 @@ class AdminDocumentTypeListView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("POST", "/document-types/", request_obj, body=request_obj.data)
-=======
-        data, code = _forward("POST", "/document-types/", body=request_obj.data)
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
 
@@ -423,11 +341,7 @@ class AdminDocumentTypeDetailView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("PATCH", f"/document-types/{pk}/", request_obj, body=request_obj.data)
-=======
-        data, code = _forward("PATCH", f"/document-types/{pk}/", body=request_obj.data)
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         return Response(data, status=code)
 
     def delete(self, request_obj, pk):
@@ -435,11 +349,7 @@ class AdminDocumentTypeDetailView(APIView):
         if err:
             return Response({"detail": err}, status=status.HTTP_401_UNAUTHORIZED)
 
-<<<<<<< HEAD
         data, code = _forward_listing("DELETE", f"/document-types/{pk}/", request_obj)
-=======
-        data, code = _forward("DELETE", f"/document-types/{pk}/")
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         if data is None:
             return Response(status=code)
         return Response(data, status=code)
