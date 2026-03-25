@@ -1,0 +1,19 @@
+api:
+  dashboard: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: ":80"
+
+providers:
+  consulCatalog:
+    endpoint:
+      address: "consul:8500"
+      scheme: "http"
+    exposedByDefault: false
+    prefix: "traefik"
+    refreshInterval: "10s"
+
+metrics:
+  prometheus: {}
