@@ -6,8 +6,5 @@ psycopg[binary]>=3.2
 python-dotenv>=1.0
 Pillow>=10.0
 cloudinary>=1.36
-<<<<<<< HEAD
 django-prometheus>=2.3
-=======
 gunicorn>=21.2
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
