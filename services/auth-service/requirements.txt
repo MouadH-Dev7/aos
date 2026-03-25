@@ -5,4 +5,8 @@ PyJWT>=2.8
 psycopg[binary]>=3.2
 python-dotenv>=1.0
 pika>=1.3
+<<<<<<< HEAD
 django-prometheus>=2.3
+=======
+gunicorn>=21.2
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e

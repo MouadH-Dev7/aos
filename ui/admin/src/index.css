@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -21,4 +22,16 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+=======
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 }

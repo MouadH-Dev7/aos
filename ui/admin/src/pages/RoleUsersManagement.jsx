@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
+<<<<<<< HEAD
 import { ADMIN_BASE_URLS, fetchWithFallback } from "../api.js";
+=======
+import { ADMIN_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "../api.js";
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
 const ROLE_IDS = {
   user: 1,
@@ -93,6 +97,7 @@ export default function RoleUsersManagement({
     setLoading(true);
     setError("");
     try {
+<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
       const [rolesRes, usersRes] = await Promise.all([
         fetchWithFallback(ADMIN_BASE_URLS, "/roles/", {
@@ -100,6 +105,14 @@ export default function RoleUsersManagement({
         }),
         fetchWithFallback(ADMIN_BASE_URLS, "/users/", {
           headers: { Authorization: `Bearer ${access}` },
+=======
+      const [rolesRes, usersRes] = await Promise.all([
+        fetchWithFallback(ADMIN_BASE_URLS, "/roles/", {
+          headers: getAdminAuthHeaders(),
+        }),
+        fetchWithFallback(ADMIN_BASE_URLS, "/users/", {
+          headers: getAdminAuthHeaders(),
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         }),
       ]);
       const rolesData = await rolesRes.json();
@@ -137,7 +150,10 @@ export default function RoleUsersManagement({
     setError("");
     setSuccess("");
     try {
+<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       const payload = {
         name: createForm.name.trim(),
         email: createForm.email.trim(),
@@ -150,7 +166,11 @@ export default function RoleUsersManagement({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+<<<<<<< HEAD
           Authorization: `Bearer ${access}`,
+=======
+          ...getAdminAuthHeaders(),
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         },
         body: JSON.stringify(payload),
       });
@@ -173,7 +193,10 @@ export default function RoleUsersManagement({
     setError("");
     setSuccess("");
     try {
+<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       const payload = {
         name: editingForm.name.trim(),
         email: editingForm.email.trim(),
@@ -186,7 +209,11 @@ export default function RoleUsersManagement({
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+<<<<<<< HEAD
           Authorization: `Bearer ${access}`,
+=======
+          ...getAdminAuthHeaders(),
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         },
         body: JSON.stringify(payload),
       });
@@ -208,10 +235,16 @@ export default function RoleUsersManagement({
     setError("");
     setSuccess("");
     try {
+<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/users/${userId}/`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${access}` },
+=======
+      const response = await fetchWithFallback(ADMIN_BASE_URLS, `/users/${userId}/`, {
+        method: "DELETE",
+        headers: getAdminAuthHeaders(),
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       });
       if (!response.ok) {
         let data = {};

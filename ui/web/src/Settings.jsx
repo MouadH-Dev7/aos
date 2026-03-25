@@ -81,9 +81,13 @@ export default function Settings({
           roleId === 2
             ? `${ACCOUNT_BASE_URL}/agences/by-user/${user.id}/`
             : `${ACCOUNT_BASE_URL}/promoteurs/by-user/${user.id}/`;
+<<<<<<< HEAD
         const access = localStorage.getItem("auth_access");
         const authHeader = access ? { Authorization: `Bearer ${access}` } : {};
         const response = await fetch(endpoint, { headers: authHeader });
+=======
+        const response = await fetch(endpoint);
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         if (!response.ok) {
           if (response.status === 404) return;
           const payload = await readApiBody(response);

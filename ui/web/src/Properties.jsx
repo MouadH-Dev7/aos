@@ -21,10 +21,14 @@ export default function Properties({
     import.meta.env.VITE_LOCATION_BASE_URL || "http://localhost:8080/api/location";
 
   const cachedListings = peekCachedJson(`${listingBaseUrl}/properties/list/`, { ttlMs: 60000 });
+<<<<<<< HEAD
   const cachedActiveListings = Array.isArray(cachedListings)
     ? cachedListings.filter((item) => (item.status_name || "").toLowerCase() === "active")
     : [];
   const initialListings = cachedActiveListings;
+=======
+  const initialListings = Array.isArray(cachedListings) ? cachedListings : [];
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
   const [listings, setListings] = useState(initialListings);
   const [loading, setLoading] = useState(initialListings.length === 0);
   const [error, setError] = useState("");
@@ -68,11 +72,15 @@ export default function Properties({
           cachedFetchJson(`${listingBaseUrl}/amenities/`, { ttlMs: 600000 }),
         ]);
         if (!isMounted) return;
+<<<<<<< HEAD
         const allListings = Array.isArray(propertiesData) ? propertiesData : [];
         const activeOnly = allListings.filter(
           (item) => (item.status_name || "").toLowerCase() === "active"
         );
         setListings(activeOnly);
+=======
+        setListings(propertiesData || []);
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         setTypes(typesData || []);
         setAmenities(amenitiesData || []);
 

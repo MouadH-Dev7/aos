@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import json
 import os
 
@@ -8,10 +9,14 @@ try:
     import redis
 except Exception:  # pragma: no cover - optional dependency
     redis = None
+=======
+from rest_framework import generics
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
 from .models import Wilaya, Commune, Daira
 from .serializers import WilayaSerializer, CommuneSerializer, DairaSerializer
 
+<<<<<<< HEAD
 _redis_client = None
 
 
@@ -53,11 +58,14 @@ def _cache_set(key, payload, ttl):
     except Exception:
         return
 
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
 class WilayaListView(generics.ListAPIView):
     queryset = Wilaya.objects.all().order_by('id')
     serializer_class = WilayaSerializer
 
+<<<<<<< HEAD
     def list(self, request, *args, **kwargs):
         ttl = int(os.getenv("LOCATION_CACHE_TTL", "900"))
         cache_key = "location:wilayas"
@@ -69,11 +77,14 @@ class WilayaListView(generics.ListAPIView):
             _cache_set(cache_key, response.data, ttl)
         return response
 
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
 class CommuneListView(generics.ListAPIView):
     queryset = Commune.objects.all().order_by('id')
     serializer_class = CommuneSerializer
 
+<<<<<<< HEAD
     def list(self, request, *args, **kwargs):
         ttl = int(os.getenv("LOCATION_CACHE_TTL", "900"))
         cache_key = "location:communes"
@@ -85,10 +96,13 @@ class CommuneListView(generics.ListAPIView):
             _cache_set(cache_key, response.data, ttl)
         return response
 
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
 class DairaListView(generics.ListAPIView):
     queryset = Daira.objects.all().order_by('id')
     serializer_class = DairaSerializer
+<<<<<<< HEAD
 
     def list(self, request, *args, **kwargs):
         ttl = int(os.getenv("LOCATION_CACHE_TTL", "900"))
@@ -100,3 +114,5 @@ class DairaListView(generics.ListAPIView):
         if response.status_code < 400:
             _cache_set(cache_key, response.data, ttl)
         return response
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e

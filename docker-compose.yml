@@ -22,6 +22,7 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+<<<<<<< HEAD
   
   redis:
     image: redis:7-alpine
@@ -44,6 +45,8 @@ services:
       - "./infra/grafana/dashboards:/var/lib/grafana/dashboards:ro"
     depends_on:
       - prometheus
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
   auth-service:
     build: ./services/auth-service
@@ -53,7 +56,10 @@ services:
       DB_HOST: host.docker.internal
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
       USER_REGISTERED_QUEUE: user_registered
+<<<<<<< HEAD
       REDIS_URL: redis://redis:6379/0
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       CONSUL_HTTP_ADDR: http://consul:8500
       SERVICE_NAME: auth-service
       SERVICE_HOST: auth-service
@@ -69,7 +75,10 @@ services:
       - ./services/account-service/.env
     environment:
       DB_HOST: host.docker.internal
+<<<<<<< HEAD
       REDIS_URL: redis://redis:6379/0
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       CONSUL_HTTP_ADDR: http://consul:8500
       SERVICE_NAME: account-service
       SERVICE_HOST: account-service
@@ -83,7 +92,10 @@ services:
       - ./services/location-service/.env
     environment:
       DB_HOST: host.docker.internal
+<<<<<<< HEAD
       REDIS_URL: redis://redis:6379/0
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       CONSUL_HTTP_ADDR: http://consul:8500
       SERVICE_NAME: location-service
       SERVICE_HOST: location-service
@@ -97,7 +109,10 @@ services:
       - ./services/listing-service/.env
     environment:
       DB_HOST: host.docker.internal
+<<<<<<< HEAD
       REDIS_URL: redis://redis:6379/0
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       CONSUL_HTTP_ADDR: http://consul:8500
       SERVICE_NAME: listing-service
       SERVICE_HOST: listing-service
@@ -111,7 +126,10 @@ services:
       - ./services/admin-validation-service/.env
     environment:
       DB_HOST: host.docker.internal
+<<<<<<< HEAD
       REDIS_URL: redis://redis:6379/0
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       CONSUL_HTTP_ADDR: http://consul:8500
       SERVICE_NAME: admin-validation-service
       SERVICE_HOST: admin-validation-service

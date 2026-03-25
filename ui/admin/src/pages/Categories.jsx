@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
+<<<<<<< HEAD
 import { ADMIN_BASE_URLS, fetchWithFallback } from "../api.js";
+=======
+import { ADMIN_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "../api.js";
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
 export default function AdminCategories({
   user,
@@ -15,6 +19,23 @@ export default function AdminCategories({
   onGoContractors,
   onLogout,
 }) {
+<<<<<<< HEAD
+=======
+  const buildAdminErrorMessage = (response, data, fallback) => {
+    if (response?.status === 502 || response?.status === 503) {
+      return "خدمة التصنيفات غير متاحة الآن (Listing Service). حاول مرة أخرى بعد قليل.";
+    }
+    const detail = typeof data?.detail === "string" ? data.detail : "";
+    if (detail.toLowerCase().includes("bad gateway")) {
+      return "الخدمة الخلفية غير متاحة الآن. حاول مرة أخرى بعد قليل.";
+    }
+    if (Array.isArray(data?.name) && data.name[0]) {
+      return data.name[0];
+    }
+    return fallback;
+  };
+
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -34,6 +55,7 @@ export default function AdminCategories({
     setLoading(true);
     setError("");
     try {
+<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/categories/", {
         headers: { Authorization: `Bearer ${access}` },
@@ -41,6 +63,19 @@ export default function AdminCategories({
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data?.detail || "Failed to load categories");
+=======
+      const response = await fetchWithFallback(ADMIN_BASE_URLS, "/categories/", {
+        headers: getAdminAuthHeaders(),
+      });
+      let data = null;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+      if (!response.ok) {
+        throw new Error(buildAdminErrorMessage(response, data, "Failed to load categories"));
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       }
       setCategories(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -63,11 +98,15 @@ export default function AdminCategories({
     setError("");
     setSuccess("");
     try {
+<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/categories/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+<<<<<<< HEAD
           Authorization: `Bearer ${access}`,
         },
         body: JSON.stringify({ name }),
@@ -76,6 +115,20 @@ export default function AdminCategories({
       if (!response.ok) {
         const apiError = data?.name?.[0] || data?.detail || "Failed to add category";
         throw new Error(apiError);
+=======
+          ...getAdminAuthHeaders(),
+        },
+        body: JSON.stringify({ name }),
+      });
+      let data = null;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+      if (!response.ok) {
+        throw new Error(buildAdminErrorMessage(response, data, "Failed to add category"));
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       }
       setCategories((prev) => [...prev, data].sort((a, b) => Number(a.id) - Number(b.id)));
       setNewName("");
@@ -95,11 +148,15 @@ export default function AdminCategories({
     setError("");
     setSuccess("");
     try {
+<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/categories/${editingId}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+<<<<<<< HEAD
           Authorization: `Bearer ${access}`,
         },
         body: JSON.stringify({ name }),
@@ -108,6 +165,20 @@ export default function AdminCategories({
       if (!response.ok) {
         const apiError = data?.name?.[0] || data?.detail || "Failed to update category";
         throw new Error(apiError);
+=======
+          ...getAdminAuthHeaders(),
+        },
+        body: JSON.stringify({ name }),
+      });
+      let data = null;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+      if (!response.ok) {
+        throw new Error(buildAdminErrorMessage(response, data, "Failed to update category"));
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       }
       setCategories((prev) =>
         prev.map((item) => (Number(item.id) === Number(editingId) ? data : item))
@@ -127,6 +198,7 @@ export default function AdminCategories({
     setError("");
     setSuccess("");
     try {
+<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/categories/${categoryId}/`, {
         method: "DELETE",
@@ -140,6 +212,20 @@ export default function AdminCategories({
           data = {};
         }
         throw new Error(data?.detail || "Failed to delete category");
+=======
+      const response = await fetchWithFallback(ADMIN_BASE_URLS, `/categories/${categoryId}/`, {
+        method: "DELETE",
+        headers: getAdminAuthHeaders(),
+      });
+      if (!response.ok) {
+        let data = null;
+        try {
+          data = await response.json();
+        } catch {
+          data = null;
+        }
+        throw new Error(buildAdminErrorMessage(response, data, "Failed to delete category"));
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       }
       setCategories((prev) => prev.filter((item) => Number(item.id) !== Number(categoryId)));
       setSuccess("Category deleted successfully.");

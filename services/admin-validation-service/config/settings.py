@@ -34,7 +34,10 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 INSTALLED_APPS = [
+<<<<<<< HEAD
     "django_prometheus",
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
     "admin_validation_service",
     "django.contrib.contenttypes",
     "django.contrib.auth",
@@ -45,7 +48,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+<<<<<<< HEAD
     "django_prometheus.middleware.PrometheusBeforeMiddleware",
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.gzip.GZipMiddleware",
     "admin_validation_service.middleware.CorsMiddleware",
@@ -54,7 +60,10 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+<<<<<<< HEAD
     "django_prometheus.middleware.PrometheusAfterMiddleware",
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -79,6 +88,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
+<<<<<<< HEAD
         "ENGINE": "django_prometheus.db.backends.postgresql",
         "NAME": os.getenv("DB_NAME", ""),
         "USER": os.getenv("DB_USER", "postgres"),
@@ -86,6 +96,9 @@ DATABASES = {
         "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": os.getenv("DB_PORT", "5432"),
         "CONN_MAX_AGE": int(os.getenv("DB_CONN_MAX_AGE", "120")),
+=======
+        "ENGINE": "django.db.backends.dummy",
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
     }
 }
 

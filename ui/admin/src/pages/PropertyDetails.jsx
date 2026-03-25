@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
+<<<<<<< HEAD
 import { ADMIN_BASE_URLS, fetchWithFallback } from "../api.js";
+=======
+import { ADMIN_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "../api.js";
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
 export default function AdminPropertyDetails({
   listing,
@@ -54,9 +58,14 @@ export default function AdminPropertyDetails({
       setLoading(true);
       setError("");
       try {
+<<<<<<< HEAD
         const access = localStorage.getItem("admin_access");
         const response = await fetchWithFallback(ADMIN_BASE_URLS, "/listings/", {
           headers: { Authorization: `Bearer ${access}` },
+=======
+        const response = await fetchWithFallback(ADMIN_BASE_URLS, "/listings/", {
+          headers: getAdminAuthHeaders(),
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         });
         const data = await response.json();
         if (!response.ok) {
@@ -77,11 +86,18 @@ export default function AdminPropertyDetails({
     if (!currentListing?.id) return;
     const loadContacts = async () => {
       try {
+<<<<<<< HEAD
         const access = localStorage.getItem("admin_access");
         const response = await fetchWithFallback(
           ADMIN_BASE_URLS,
           `/properties/${currentListing.id}/contacts/`,
           { headers: { Authorization: `Bearer ${access}` } }
+=======
+        const response = await fetchWithFallback(
+          ADMIN_BASE_URLS,
+          `/properties/${currentListing.id}/contacts/`,
+          { headers: getAdminAuthHeaders() }
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         );
         const data = await response.json();
         if (!response.ok) {

@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cachedFetchJson } from "./utils/apiCache";
+<<<<<<< HEAD
 import { useLocation, useNavigate } from "react-router-dom";
+=======
+import { useLocation } from "react-router-dom";
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
 export default function PropertyDetails({
  user,
@@ -14,7 +18,10 @@ export default function PropertyDetails({
  onClearSuccess,
 }) {
  const LISTING_BASE_URL = import.meta.env.VITE_LISTING_BASE_URL || "http://localhost:8004";
+<<<<<<< HEAD
  const LOCATION_BASE_URL = import.meta.env.VITE_LOCATION_BASE_URL || "http://localhost:8080/api/location";
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  const getAuthHeaders = () => {
   const access = localStorage.getItem("auth_access");
   return access ? { Authorization: `Bearer ${access}` } : {};
@@ -22,11 +29,17 @@ export default function PropertyDetails({
  const [currentListing, setCurrentListing] = useState(listing || null);
  const [loading, setLoading] = useState(false);
  const [error, setError] = useState("");
+<<<<<<< HEAD
  const [locationInfo, setLocationInfo] = useState({ wilaya: null, commune: null, coords: null });
  const mapRef = useRef(null);
  const mapInstanceRef = useRef(null);
  const markerRef = useRef(null);
  const tileLayerRef = useRef(null);
+=======
+ const mapRef = useRef(null);
+ const mapInstanceRef = useRef(null);
+ const markerRef = useRef(null);
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteError, setDeleteError] = useState("");
  const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -37,7 +50,10 @@ export default function PropertyDetails({
  const pointersRef = useRef(new Map());
  const pinchRef = useRef({ startDistance: 0, startZoom: 1, startCenter: { x: 0, y: 0 }, startOffset: { x: 0, y: 0 } });
  const location = useLocation();
+<<<<<<< HEAD
  const navigate = useNavigate();
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  const routedListing = location?.state?.listing || null;
 
  const images = useMemo(() => {
@@ -58,10 +74,13 @@ export default function PropertyDetails({
 
  const mainImage = images[0] || "";
  const isOwner = Boolean(user?.id && currentListing?.user_id && String(user.id) === String(currentListing.user_id));
+<<<<<<< HEAD
  const fallbackLat = locationInfo?.coords?.lat;
  const fallbackLon = locationInfo?.coords?.lon;
  const effectiveLat = Number.isFinite(Number(currentListing?.latitude)) ? Number(currentListing?.latitude) : Number(fallbackLat);
  const effectiveLon = Number.isFinite(Number(currentListing?.longitude)) ? Number(currentListing?.longitude) : Number(fallbackLon);
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
  const openLightbox = (index) => {
   setActiveImageIndex(index);
@@ -172,6 +191,7 @@ export default function PropertyDetails({
 
  // Fallback to user-specific list if we have an authenticated user.
  if (user?.id) {
+<<<<<<< HEAD
  const access = localStorage.getItem("auth_access");
  if (!access) {
   throw new Error("Please login before viewing your listings.");
@@ -183,6 +203,9 @@ export default function PropertyDetails({
  if (!response.ok) {
   throw new Error(data?.detail || "Failed to load listings");
  }
+=======
+ const data = await cachedFetchJson(`${LISTING_BASE_URL}/properties/list/?user_id=${user.id}`, { ttlMs: 30000 });
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  const found = Array.isArray(data)
   ? data.find((item) => String(item.id) === String(listingId))
   : null;
@@ -232,6 +255,7 @@ export default function PropertyDetails({
  }, [LISTING_BASE_URL, currentListing?.id]);
 
  useEffect(() => {
+<<<<<<< HEAD
   if (!currentListing?.commune_id) {
     setLocationInfo({ wilaya: null, commune: null, coords: null });
     return;
@@ -313,6 +337,32 @@ useEffect(() => {
   }).addTo(map);
  }
  map.setView([effectiveLat, effectiveLon], Math.max(map.getZoom(), 13));
+=======
+ if (mapInstanceRef.current || !mapRef.current) return;
+ if (!window.L) return;
+ if (window.L.Icon && window.L.Icon.Default) {
+ window.L.Icon.Default.mergeOptions({
+ iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+ iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+ shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+ });
+ }
+ const map = window.L.map(mapRef.current).setView([36.7538, 3.0588], 6);
+ window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+ attribution: "&copy; OpenStreetMap contributors",
+ }).addTo(map);
+ mapInstanceRef.current = map;
+ setTimeout(() => map.invalidateSize(), 0);
+ }, []);
+
+ useEffect(() => {
+ if (!mapInstanceRef.current || !window.L || !currentListing) return;
+ const latNum = Number(currentListing.latitude);
+ const lonNum = Number(currentListing.longitude);
+ if (!Number.isFinite(latNum) || !Number.isFinite(lonNum)) return;
+ const map = mapInstanceRef.current;
+ map.setView([latNum, lonNum], Math.max(map.getZoom(), 13));
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  if (!markerRef.current) {
  const markerIcon = window.L.divIcon({
  className: "",
@@ -320,6 +370,7 @@ useEffect(() => {
  iconSize: [14, 14],
  iconAnchor: [7, 7],
  });
+<<<<<<< HEAD
  markerRef.current = window.L.marker([effectiveLat, effectiveLon], { icon: markerIcon }).addTo(map);
  } else {
  markerRef.current.setLatLng([effectiveLat, effectiveLon]);
@@ -327,6 +378,14 @@ useEffect(() => {
  map.invalidateSize();
  setTimeout(() => map.invalidateSize(), 200);
  }, [currentListing, effectiveLat, effectiveLon]);
+=======
+ markerRef.current = window.L.marker([latNum, lonNum], { icon: markerIcon }).addTo(map);
+ } else {
+ markerRef.current.setLatLng([latNum, lonNum]);
+ }
+ map.invalidateSize();
+ }, [currentListing]);
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
  useEffect(() => {
   if (!successMessage || !onClearSuccess) return;
@@ -399,6 +458,7 @@ useEffect(() => {
 
  const statusName = currentListing.status_name || "Pending";
  const createdDate = currentListing.created_at ? new Date(currentListing.created_at).toLocaleDateString() : "—";
+<<<<<<< HEAD
  const wilayaLabel =
   currentListing.wilaya_name ||
   locationInfo?.wilaya?.name_en ||
@@ -409,6 +469,8 @@ useEffect(() => {
   locationInfo?.commune?.name_en ||
   locationInfo?.commune?.name_ar ||
   "Commune";
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
  return (
  <div className="bg-background-light font-display text-slate-900 min-h-screen">
@@ -641,7 +703,11 @@ useEffect(() => {
  </div>
  <div className="h-64 bg-slate-100 relative overflow-hidden">
  <div ref={mapRef} className="absolute inset-0 w-full h-full"></div>
+<<<<<<< HEAD
  {(!Number.isFinite(effectiveLat) || !Number.isFinite(effectiveLon)) && (
+=======
+ {(!currentListing.latitude || !currentListing.longitude) && (
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  <div className="absolute inset-0 bg-slate-200 flex flex-col items-center justify-center text-slate-400 pointer-events-none">
  <span className="material-symbols-outlined text-4xl mb-2">place</span>
  <span className="text-xs">No location coordinates yet</span>
@@ -650,18 +716,26 @@ useEffect(() => {
  </div>
  <div className="p-4 text-sm">
  <p className="font-semibold">Location</p>
+<<<<<<< HEAD
  <p className="text-slate-500">{wilayaLabel} - {communeLabel}</p>
+=======
+ <p className="text-slate-500">{currentListing.category_name} {currentListing.type_name}</p>
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  </div>
  </div>
 
  <div className="bg-primary/10 p-6 rounded-xl border border-primary/20">
  <h4 className="font-bold text-primary mb-2">Need Help? </h4>
  <p className="text-sm text-slate-600 mb-4">Our support team is available 24/7 for any questions regarding your listing.</p>
+<<<<<<< HEAD
  <button
  className="block w-full py-2 bg-white border border-primary/30 text-center text-primary font-bold rounded-lg text-sm hover:bg-primary hover:text-white transition-all"
  type="button"
  onClick={() => navigate("/contact")}
  >
+=======
+ <button className="block w-full py-2 bg-white border border-primary/30 text-center text-primary font-bold rounded-lg text-sm hover:bg-primary hover:text-white transition-all" type="button">
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  Contact Support </button>
  </div>
  </div>
@@ -672,6 +746,11 @@ useEffect(() => {
  <span className="material-symbols-outlined">arrow_back</span>
  Back to Listings </button>
  <div className="flex gap-4">
+<<<<<<< HEAD
+=======
+ <button className="px-6 py-2 rounded-lg bg-slate-200 font-medium hover:bg-slate-300 transition-colors" type="button">
+ Archive </button>
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  <button className="px-6 py-2 rounded-lg bg-primary text-white font-bold shadow-lg shadow-primary/25 hover:brightness-110 transition-all" type="button">
  Promote Listing </button>
  </div>

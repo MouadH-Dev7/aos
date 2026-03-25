@@ -85,9 +85,13 @@ export default function EditProperty({ user }) {
           return;
         }
 
+<<<<<<< HEAD
         const response = await fetch(`${LISTING_BASE_URL}/properties/list/?user_id=${user.id}`, {
           headers: { ...getAuthHeaders() },
         });
+=======
+        const response = await fetch(`${LISTING_BASE_URL}/properties/list/?user_id=${user.id}`);
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         const data = await response.json();
         if (!response.ok) {
           throw new Error(data?.detail || "Failed to load listing.");

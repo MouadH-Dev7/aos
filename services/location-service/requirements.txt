@@ -3,5 +3,9 @@ djangorestframework>=3.15
 django-cors-headers>=4.3
 python-dotenv>=1.0
 psycopg[binary]>=3.2
+<<<<<<< HEAD
 redis>=5.0
 django-prometheus>=2.3
+=======
+gunicorn>=21.2
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
