@@ -28,7 +28,6 @@ export default function MyListings({
  setLoading(true);
  setError("");
  try {
-<<<<<<< HEAD
  const access = localStorage.getItem("auth_access");
  if (!access) {
   throw new Error("Please login before viewing your listings.");
@@ -40,12 +39,6 @@ export default function MyListings({
  if (!response.ok) {
   throw new Error(data?.detail || "Failed to load listings");
  }
-=======
- const data = await cachedFetchJson(
- `${LISTING_BASE_URL}/properties/list/?user_id=${user.id}`,
- { ttlMs: 30000 }
- );
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  setListings(Array.isArray(data) ? data : []);
  } catch (err) {
  setError(err?.message || "Failed to load listings");

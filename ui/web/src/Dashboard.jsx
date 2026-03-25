@@ -20,7 +20,6 @@ export default function Dashboard({ user, stats, onLogout, onHome, onAddProperty
  setRecentLoading(true);
  setRecentError("");
  try {
-<<<<<<< HEAD
  const access = localStorage.getItem("auth_access");
  if (!access) {
   throw new Error("Please login before viewing your listings.");
@@ -32,12 +31,6 @@ export default function Dashboard({ user, stats, onLogout, onHome, onAddProperty
  if (!response.ok) {
   throw new Error(data?.detail || "Failed to load listings");
  }
-=======
- const data = await cachedFetchJson(
- `${LISTING_BASE_URL}/properties/list/?user_id=${user.id}`,
- { ttlMs: 30000 }
- );
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
  const items = Array.isArray(data) ? data.slice(0, 3) : [];
  setRecentListings(items);
  } catch (error) {
