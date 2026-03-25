@@ -1,10 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-<<<<<<< HEAD
 import { ADMIN_BASE_URLS, fetchWithFallback } from "../api.js";
-=======
-import { ADMIN_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "../api.js";
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
 export default function AdminDocumentTypes({
   user,
@@ -38,14 +34,9 @@ export default function AdminDocumentTypes({
     setLoading(true);
     setError("");
     try {
-<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/document-types/", {
         headers: { Authorization: `Bearer ${access}` },
-=======
-      const response = await fetchWithFallback(ADMIN_BASE_URLS, "/document-types/", {
-        headers: getAdminAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       });
       const data = await response.json();
       if (!response.ok) {
@@ -72,19 +63,12 @@ export default function AdminDocumentTypes({
     setError("");
     setSuccess("");
     try {
-<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
-=======
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/document-types/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-<<<<<<< HEAD
           Authorization: `Bearer ${access}`,
-=======
-          ...getAdminAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         },
         body: JSON.stringify({ name }),
       });
@@ -111,19 +95,12 @@ export default function AdminDocumentTypes({
     setError("");
     setSuccess("");
     try {
-<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
-=======
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/document-types/${editingId}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-<<<<<<< HEAD
           Authorization: `Bearer ${access}`,
-=======
-          ...getAdminAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         },
         body: JSON.stringify({ name }),
       });
@@ -150,16 +127,10 @@ export default function AdminDocumentTypes({
     setError("");
     setSuccess("");
     try {
-<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/document-types/${documentTypeId}/`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${access}` },
-=======
-      const response = await fetchWithFallback(ADMIN_BASE_URLS, `/document-types/${documentTypeId}/`, {
-        method: "DELETE",
-        headers: getAdminAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       });
       if (!response.ok) {
         let data = {};

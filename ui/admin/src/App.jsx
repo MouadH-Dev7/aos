@@ -1,11 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./index.css";
 
-<<<<<<< HEAD
 import { ADMIN_BASE_URLS, AUTH_BASE_URLS, fetchWithFallback } from "./api.js";
-=======
-import { ADMIN_BASE_URLS, AUTH_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "./api.js";
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 import AdminLogin from "./pages/AdminLogin.jsx";
 import AdminDashboard from "./pages/Dashboard.jsx";
 import AdminListings from "./pages/Listings.jsx";
@@ -81,37 +77,12 @@ export default function App() {
     });
   };
 
-<<<<<<< HEAD
-=======
-  const buildAuthHeaders = () => getAdminAuthHeaders();
-
-  const readStoredUser = () => {
-    try {
-      const raw = localStorage.getItem("admin_user");
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
-  };
-
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
   useEffect(() => {
     const handlePop = () => setRoute(getPath());
     window.addEventListener("popstate", handlePop);
     return () => window.removeEventListener("popstate", handlePop);
   }, []);
 
-<<<<<<< HEAD
-=======
-  useEffect(() => {
-    if (authUser) return;
-    const storedUser = readStoredUser();
-    if (storedUser) {
-      setAuthUser(storedUser);
-    }
-  }, [authUser]);
-
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
   const routeInfo = useMemo(() => parseRoute(route), [route]);
 
   useEffect(() => {
@@ -121,7 +92,6 @@ export default function App() {
   }, [authUser, route]);
 
   useEffect(() => {
-<<<<<<< HEAD
     const access = localStorage.getItem("admin_access");
     if (!access) return;
 
@@ -148,21 +118,14 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-=======
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
     if (!authUser) return;
     const loadListings = async () => {
       setListingsError("");
       setListingsLoading(true);
       try {
-<<<<<<< HEAD
         const access = localStorage.getItem("admin_access");
         const response = await fetchWithFallback(ADMIN_BASE_URLS, "/listings/", {
           headers: { Authorization: `Bearer ${access}` },
-=======
-        const response = await fetchWithFallback(ADMIN_BASE_URLS, "/listings/", {
-          headers: buildAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         });
         const data = await response.json();
         if (!response.ok) {
@@ -183,14 +146,9 @@ export default function App() {
     if (!authUser) return;
     const loadStatuses = async () => {
       try {
-<<<<<<< HEAD
         const access = localStorage.getItem("admin_access");
         const response = await fetchWithFallback(ADMIN_BASE_URLS, "/statuses/", {
           headers: { Authorization: `Bearer ${access}` },
-=======
-        const response = await fetchWithFallback(ADMIN_BASE_URLS, "/statuses/", {
-          headers: buildAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         });
         const data = await response.json();
         if (!response.ok) {
@@ -233,22 +191,8 @@ export default function App() {
       if (Number(data?.user?.role_id) !== ADMIN_ROLE_ID) {
         throw new Error("This account is not an admin.");
       }
-<<<<<<< HEAD
       localStorage.setItem("admin_access", data.access);
       localStorage.setItem("admin_refresh", data.refresh);
-=======
-      const accessToken = data?.access || data?.access_token || data?.token;
-      const refreshToken = data?.refresh || data?.refresh_token;
-      if (!accessToken) {
-        throw new Error("Login succeeded but access token is missing.");
-      }
-      localStorage.setItem("admin_access", accessToken);
-      if (refreshToken) {
-        localStorage.setItem("admin_refresh", refreshToken);
-      } else {
-        localStorage.removeItem("admin_refresh");
-      }
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       localStorage.setItem("admin_user", JSON.stringify(data.user));
       setAuthUser(data.user);
       if (route === "/") {
@@ -282,19 +226,12 @@ export default function App() {
     setActionError("");
     setActionSuccess("");
     try {
-<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
-=======
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/properties/${listing.id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-<<<<<<< HEAD
           Authorization: `Bearer ${access}`,
-=======
-          ...buildAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         },
         body: JSON.stringify({ status: statusId }),
       });

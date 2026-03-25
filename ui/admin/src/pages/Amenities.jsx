@@ -1,10 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-<<<<<<< HEAD
 import { ADMIN_BASE_URLS, fetchWithFallback } from "../api.js";
-=======
-import { ADMIN_BASE_URLS, fetchWithFallback, getAdminAuthHeaders } from "../api.js";
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 
 export default function AdminAmenities({
   user,
@@ -39,14 +35,9 @@ export default function AdminAmenities({
     setLoading(true);
     setError("");
     try {
-<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/amenities/", {
         headers: { Authorization: `Bearer ${access}` },
-=======
-      const response = await fetchWithFallback(ADMIN_BASE_URLS, "/amenities/", {
-        headers: getAdminAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       });
       const data = await response.json();
       if (!response.ok) {
@@ -73,19 +64,12 @@ export default function AdminAmenities({
     setError("");
     setSuccess("");
     try {
-<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
-=======
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       const response = await fetchWithFallback(ADMIN_BASE_URLS, "/amenities/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-<<<<<<< HEAD
           Authorization: `Bearer ${access}`,
-=======
-          ...getAdminAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         },
         body: JSON.stringify({ name }),
       });
@@ -112,19 +96,12 @@ export default function AdminAmenities({
     setError("");
     setSuccess("");
     try {
-<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
-=======
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/amenities/${editingId}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-<<<<<<< HEAD
           Authorization: `Bearer ${access}`,
-=======
-          ...getAdminAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
         },
         body: JSON.stringify({ name }),
       });
@@ -155,16 +132,10 @@ export default function AdminAmenities({
     setError("");
     setSuccess("");
     try {
-<<<<<<< HEAD
       const access = localStorage.getItem("admin_access");
       const response = await fetchWithFallback(ADMIN_BASE_URLS, `/amenities/${amenityId}/`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${access}` },
-=======
-      const response = await fetchWithFallback(ADMIN_BASE_URLS, `/amenities/${amenityId}/`, {
-        method: "DELETE",
-        headers: getAdminAuthHeaders(),
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
       });
       if (!response.ok) {
         if (response.status === 404) {

@@ -24,13 +24,6 @@ export const fetchWithFallback = async (baseUrls, path, options) => {
   throw lastNetworkError || new Error("All API base URLs are unreachable.");
 };
 
-<<<<<<< HEAD
-=======
-export const getAdminAuthHeaders = () => {
-  return {};
-};
-
->>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
 export const AUTH_BASE_URLS = buildBaseCandidates(import.meta.env.VITE_AUTH_BASE_URL, [
   "http://localhost:8080/api/auth",
   "http://localhost:8001",
