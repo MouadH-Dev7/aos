@@ -32,6 +32,8 @@ services:
         value: "user_registered"
       - key: ADMIN_ROLE_ID
         value: "4"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://web-bm0c.onrender.com"
       - key: DB_SSLMODE
         value: "require"
       - key: DB_CONNECT_TIMEOUT
@@ -70,6 +72,8 @@ services:
         value: "HS256"
       - key: ADMIN_ROLE_ID
         value: "4"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://web-bm0c.onrender.com"
 
   - type: web
     name: listing-service
@@ -108,6 +112,8 @@ services:
         value: "4"
       - key: CLOUDINARY_URL
         value: "REPLACE_ME"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://web-bm0c.onrender.com"
 
   - type: web
     name: location-service
@@ -136,6 +142,8 @@ services:
         value: "require"
       - key: DB_CONNECT_TIMEOUT
         value: "10"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://web-bm0c.onrender.com"
 
   - type: web
     name: admin-validation-service
@@ -174,6 +182,8 @@ services:
         value: "https://auth-service-56qw.onrender.com"
       - key: LISTING_BASE_URLS
         value: "https://listing-service-8h0f.onrender.com"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://web-bm0c.onrender.com"
 
   - type: worker
     name: notification-worker
