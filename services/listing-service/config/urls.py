@@ -10,6 +10,7 @@ def health(request):
 urlpatterns = [
     path("health/", health),
     path("metrics/", include("django_prometheus.urls")),
+    path("api/listing/", include("listing_service.urls")),
     path("", include("listing_service.urls")),
 ]
 
