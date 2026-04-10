@@ -1,0 +1,5 @@
+CREATE DATABASE auth_db;
+CREATE DATABASE account_db;
+CREATE DATABASE listing_db;
+CREATE DATABASE location_db;
+CREATE DATABASE admin_db;
