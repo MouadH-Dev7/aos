@@ -10,6 +10,7 @@ export default function MainLayout({ user, onLogout }) {
 
   return (
     <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col">
+<<<<<<< HEAD
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center group">
@@ -20,6 +21,18 @@ export default function MainLayout({ user, onLogout }) {
             />
           </Link>
 
+=======
+      {/* Navigation Header */}
+      <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="bg-primary p-2 rounded-lg text-white group-hover:scale-110 transition-transform">
+              <span className="material-symbols-outlined block text-2xl">domain</span>
+            </div>
+            <h1 className="text-2xl font-extrabold tracking-tight text-primary">ImmoAlgeria</h1>
+          </Link>
+          
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
           <nav className="hidden md:flex items-center gap-8">
             <div className="flex gap-6">
               <Link to="/properties" className="text-sm font-semibold hover:text-primary transition-colors">Properties</Link>
@@ -27,9 +40,15 @@ export default function MainLayout({ user, onLogout }) {
               <Link to="/promoters" className="text-sm font-semibold hover:text-primary transition-colors">Promoters</Link>
               <Link to="/about" className="text-sm font-semibold hover:text-primary transition-colors">About</Link>
             </div>
+<<<<<<< HEAD
 
             <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
 
+=======
+            
+            <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
+            
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
             <div className="flex items-center gap-4">
               {user ? (
                 <>
@@ -56,14 +75,26 @@ export default function MainLayout({ user, onLogout }) {
           </nav>
         </div>
       </header>
+<<<<<<< HEAD
 
+=======
+      
+      {/* Page Content */}
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
       <main className="flex-1">
         <Outlet />
       </main>
 
+<<<<<<< HEAD
       <footer className="border-t border-slate-200 dark:border-slate-800 py-8 px-6 lg:px-20 bg-white dark:bg-slate-900 mt-auto">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
           <p>© 2026 Immo DZ. All rights reserved.</p>
+=======
+      {/* Basic Footer */}
+      <footer className="border-t border-slate-200 dark:border-slate-800 py-8 px-6 lg:px-20 bg-white dark:bg-slate-900 mt-auto">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
+          <p>© 2026 ImmoAlgeria. All rights reserved.</p>
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
           <div className="flex gap-6">
             <Link to="/contact" className="hover:text-primary">Contact Us</Link>
             <Link to="/terms" className="hover:text-primary">Terms of Service</Link>

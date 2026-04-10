@@ -35,7 +35,11 @@ export default function Contact({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             <div className="lg:col-span-5 space-y-6">
               {[
+<<<<<<< HEAD
                 { icon: "mail", title: "Email / البريد", text: "contact@immodz.dz", note: "For inquiries & support" },
+=======
+                { icon: "mail", title: "Email / البريد", text: "contact@immoalgeria.dz", note: "For inquiries & support" },
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
                 { icon: "call", title: "Phone / الهاتف", text: "+213 (0) 23 45 67 89", note: "Sun-Thu, 9am-6pm" },
                 { icon: "location_on", title: "Office / المكتب", text: "05 Rue Didouche Mourad, Algiers", note: "Visit our headquarters" },
                 { icon: "schedule", title: "Working Hours / ساعات العمل", text: "09:00 - 18:00 (GMT+1)", note: "Sunday to Thursday" },
@@ -112,7 +116,11 @@ export default function Contact({
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-white/90 backdrop-blur px-6 py-3 rounded-2xl shadow-xl text-sm font-bold text-slate-800">
+<<<<<<< HEAD
                 Immo DZ Headquarters
+=======
+                ImmoAlgeria Headquarters
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
               </div>
             </div>
           </div>

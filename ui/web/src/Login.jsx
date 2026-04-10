@@ -189,11 +189,18 @@ export default function Login({ onLoginSuccess }) {
           />
           <div className="relative z-20 flex flex-col justify-between h-full p-16 text-white">
             <div className="flex items-center gap-3">
+<<<<<<< HEAD
               <img
                 src="/logo_x.png"
                 alt="Immo DZ"
                 className="h-14 w-auto object-contain"
               />
+=======
+              <div className="bg-white/20 backdrop-blur-md p-2 rounded-lg">
+                <span className="material-symbols-outlined text-white text-3xl">domain</span>
+              </div>
+              <h2 className="text-2xl font-extrabold tracking-tight">ImmoAlgeria</h2>
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
             </div>
             <div className="max-w-md">
               <h1 className="text-5xl font-extrabold leading-tight mb-6">
@@ -224,18 +231,29 @@ export default function Login({ onLoginSuccess }) {
                 <p className="text-sm self-center text-blue-50 font-medium">Join 5,000+ active investors</p>
               </div>
             </div>
+<<<<<<< HEAD
             <div className="text-sm font-medium text-blue-200">© 2026 Immo DZ. All rights reserved.</div>
+=======
+            <div className="text-sm font-medium text-blue-200">© 2026 ImmoAlgeria. All rights reserved.</div>
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
           </div>
         </div>
 
         <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-6 sm:p-12 md:p-20 bg-white dark:bg-background-dark overflow-y-auto no-scrollbar">
           <div className="w-full max-w-[480px]">
             <div className="lg:hidden flex items-center gap-3 mb-10">
+<<<<<<< HEAD
               <img
                 src="/logo_x.png"
                 alt="Immo DZ"
                 className="h-12 w-auto object-contain"
               />
+=======
+              <div className="bg-primary p-2 rounded-lg text-white">
+                <span className="material-symbols-outlined text-2xl">domain</span>
+              </div>
+              <h2 className="text-xl font-bold tracking-tight">ImmoAlgeria</h2>
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
             </div>
 
             <div className="flex border-b border-slate-200 dark:border-slate-800 mb-8">

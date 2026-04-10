@@ -14,6 +14,15 @@ providers:
     exposedByDefault: false
     prefix: "traefik"
     refreshInterval: "10s"
+<<<<<<< HEAD
 
 metrics:
   prometheus: {}
+=======
+<<<<<<< HEAD
+
+metrics:
+  prometheus: {}
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08

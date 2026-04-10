@@ -5,7 +5,11 @@ export default function Terms() {
         <p className="text-xs font-bold tracking-[0.2em] text-primary uppercase mb-3">Legal</p>
         <h1 className="text-3xl md:text-4xl font-black mb-4">Terms of Service</h1>
         <p className="text-slate-600 mb-8">
+<<<<<<< HEAD
           These terms outline how users can access and use Immo DZ services.
+=======
+          These terms outline how users can access and use ImmoAlgeria services.
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
           Replace this placeholder with your official terms and legal notices.
         </p>
         <div className="space-y-6 text-sm text-slate-600">
@@ -19,7 +23,11 @@ export default function Terms() {
           <div className="rounded-2xl border border-slate-200 bg-white p-6">
             <h2 className="text-lg font-bold text-slate-900 mb-2">2. Listings & Content</h2>
             <p>
+<<<<<<< HEAD
               All listings must be truthful and kept up to date. Immo DZ reserves the right
+=======
+              All listings must be truthful and kept up to date. ImmoAlgeria reserves the right
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
               to remove content that violates policy.
             </p>
           </div>

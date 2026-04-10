@@ -42,7 +42,11 @@ export default function About({ onHome, onProperties, onAgencies, onPromoters, o
        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-4 mb-6">Redefining the Search for Home</h2>
        <div className="space-y-6 text-slate-600 leading-relaxed">
         <p>
+<<<<<<< HEAD
          Founded in 2026, Immo DZ emerged from a simple observation: finding a home in Algeria shouldn't be a hurdle. We set out to bridge the gap between dreamers and developers, property seekers and trusted agencies.
+=======
+         Founded in 2026, ImmoAlgeria emerged from a simple observation: finding a home in Algeria shouldn't be a hurdle. We set out to bridge the gap between dreamers and developers, property seekers and trusted agencies.
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
         </p>
         <p className="rtl text-right italic border-r-4 border-primary/20 pr-4">
          تأسست إيمو ألجيريا عام 2026 بعد ملاحظة بسيطة: البحث عن منزل في الجزائر يجب أن يكون واضحا وسلسا. هدفنا هو ربط الباحثين عن السكن بالمطورين والوكالات الموثوقة في مكان واحد.
@@ -146,7 +150,11 @@ export default function About({ onHome, onProperties, onAgencies, onPromoters, o
    <section className="py-24 bg-white">
     <div className="container mx-auto px-6">
      <div className="text-center mb-16">
+<<<<<<< HEAD
       <h2 className="text-3xl md:text-4xl font-bold text-slate-900">The Minds Behind Immo DZ</h2>
+=======
+      <h2 className="text-3xl md:text-4xl font-bold text-slate-900">The Minds Behind ImmoAlgeria</h2>
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
       <p className="text-slate-500 mt-4">A team of experts dedicated to transforming the market.</p>
      </div>
      <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 max-w-4xl mx-auto">
@@ -191,7 +199,11 @@ export default function About({ onHome, onProperties, onAgencies, onPromoters, o
     <div className="container mx-auto px-6">
      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-slate-800 pb-12">
       <div className="col-span-1 md:col-span-2">
+<<<<<<< HEAD
        <div className="text-white text-2xl font-bold mb-6">Immo DZ</div>
+=======
+       <div className="text-white text-2xl font-bold mb-6">ImmoAlgeria</div>
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
        <p className="max-w-sm">
         A trusted digital marketplace connecting buyers, renters, agencies, and promoters across Algeria with verified listings and professional support.
        </p>
@@ -215,7 +227,11 @@ export default function About({ onHome, onProperties, onAgencies, onPromoters, o
       </div>
      </div>
      <div className="pt-8 text-sm flex flex-col md:flex-row justify-between items-center">
+<<<<<<< HEAD
       <p>© 2026 Immo DZ. All rights reserved.</p>
+=======
+      <p>© 2026 ImmoAlgeria. All rights reserved.</p>
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
       <p className="rtl mt-4 md:mt-0">© 2026 إيمو ألجيريا. جميع الحقوق محفوظة.</p>
      </div>
     </div>

@@ -7,7 +7,14 @@ Structure initiale du projet selon les contraintes WAMS.
 - UI web: `ui/web`
 - UI admin: `ui/admin`
 - Infra: `traefik`, `consul`, `rabbitmq`
+<<<<<<< HEAD
 - Cache distribue: `redis`
+=======
+<<<<<<< HEAD
+- Cache distribue: `redis`
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
 
 ## Quick Start (Docker)
 
@@ -20,10 +27,19 @@ docker compose up --build
 
 - Traefik (dashboard): `http://localhost:8081`
 - Consul (UI): `http://localhost:8500/ui`
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
 - Redis: `localhost:6379`
 - Prometheus: `http://localhost:9090`
 - Grafana: `http://localhost:3000`
   - Default login: `admin / admin`
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 07acdb2b48ee3790e99efe1efa7a7a09024b125e
+>>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
 - UI web: `http://localhost:5173`
 - UI admin: `http://localhost:5174`
 
