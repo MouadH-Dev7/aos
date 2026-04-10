@@ -181,13 +181,17 @@ class AdminPropertyDetailView(APIView):
 
         data, code = _forward_listing("PATCH", f"/properties/{pk}/", request_obj, body=request_obj.data)
         if code < 400:
-            decision = f"status:{request_obj.data.get('status')}"
-            PropertyReview.objects.create(
-                property_id=pk,
-                admin_user_id=admin_user_id,
-                decision=decision[:20],
-                note="Updated from admin-validation-service",
-            )
+            try:
+                decision = f"status:{request_obj.data.get('status')}"
+                PropertyReview.objects.create(
+                    property_id=pk,
+                    admin_user_id=admin_user_id,
+                    decision=decision[:20],
+                    note="Updated from admin-validation-service",
+                )
+            except Exception:
+                # Approval/rejection should still succeed even if local audit logging fails.
+                pass
         return Response(data, status=code)
 
 
