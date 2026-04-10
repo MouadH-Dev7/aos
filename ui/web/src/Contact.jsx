@@ -21,7 +21,7 @@ export default function Contact({
               Get In Touch
             </span>
             <h1 className="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight mb-6">
-              Contact Us / اتصل بنا
+              Contact Us / Ø§ØªØµÙ„ Ø¨Ù†Ø§
             </h1>
             <p className="max-w-2xl mx-auto text-slate-600 text-lg leading-relaxed">
               Have questions about listings or want to partner with us? We are here to help you navigate Algeria&apos;s real estate market.
@@ -35,14 +35,10 @@ export default function Contact({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             <div className="lg:col-span-5 space-y-6">
               {[
-<<<<<<< HEAD
-                { icon: "mail", title: "Email / البريد", text: "contact@immodz.dz", note: "For inquiries & support" },
-=======
-                { icon: "mail", title: "Email / البريد", text: "contact@immoalgeria.dz", note: "For inquiries & support" },
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
-                { icon: "call", title: "Phone / الهاتف", text: "+213 (0) 23 45 67 89", note: "Sun-Thu, 9am-6pm" },
-                { icon: "location_on", title: "Office / المكتب", text: "05 Rue Didouche Mourad, Algiers", note: "Visit our headquarters" },
-                { icon: "schedule", title: "Working Hours / ساعات العمل", text: "09:00 - 18:00 (GMT+1)", note: "Sunday to Thursday" },
+                { icon: "mail", title: "Email / Ø§Ù„Ø¨Ø±ÙŠØ¯", text: "contact@immodz.dz", note: "For inquiries & support" },
+                { icon: "call", title: "Phone / Ø§Ù„Ù‡Ø§ØªÙ", text: "+213 (0) 23 45 67 89", note: "Sun-Thu, 9am-6pm" },
+                { icon: "location_on", title: "Office / Ø§Ù„Ù…ÙƒØªØ¨", text: "05 Rue Didouche Mourad, Algiers", note: "Visit our headquarters" },
+                { icon: "schedule", title: "Working Hours / Ø³Ø§Ø¹Ø§Øª Ø§Ù„Ø¹Ù…Ù„", text: "09:00 - 18:00 (GMT+1)", note: "Sunday to Thursday" },
               ].map((item) => (
                 <div key={item.title} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                   <div className="flex items-start gap-4">
@@ -77,25 +73,25 @@ export default function Contact({
             <div className="lg:col-span-7">
               <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
-                  Send a Message / إرسال رسالة
+                  Send a Message / Ø¥Ø±Ø³Ø§Ù„ Ø±Ø³Ø§Ù„Ø©
                 </h2>
                 <form className="space-y-5">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Full Name / الاسم الكامل</label>
+                      <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Full Name / Ø§Ù„Ø§Ø³Ù… Ø§Ù„ÙƒØ§Ù…Ù„</label>
                       <input className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary" placeholder="John Doe" type="text" />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Email / البريد الإلكتروني</label>
+                      <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Email / Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ</label>
                       <input className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary" placeholder="john@example.com" type="email" />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Subject / الموضوع</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Subject / Ø§Ù„Ù…ÙˆØ¶ÙˆØ¹</label>
                     <input className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary" placeholder="How can we help?" type="text" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Message / الرسالة</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Message / Ø§Ù„Ø±Ø³Ø§Ù„Ø©</label>
                     <textarea className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary resize-none" placeholder="Your message here..." rows="5"></textarea>
                   </div>
                   <button className="w-full rounded-xl bg-primary text-white font-bold py-4 shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all" type="submit">
@@ -116,11 +112,7 @@ export default function Contact({
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-white/90 backdrop-blur px-6 py-3 rounded-2xl shadow-xl text-sm font-bold text-slate-800">
-<<<<<<< HEAD
                 Immo DZ Headquarters
-=======
-                ImmoAlgeria Headquarters
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
               </div>
             </div>
           </div>

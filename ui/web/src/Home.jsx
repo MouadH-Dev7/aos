@@ -120,14 +120,7 @@ export default function Home({ user, onLogout }) {
         <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-background-light/80 backdrop-blur-md">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
             <Link to="/" className="flex items-center gap-3">
-<<<<<<< HEAD
               <img src="/logo_x.png" alt="Immo DZ" className="h-10 w-auto object-contain" />
-=======
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
-                <span className="material-symbols-outlined text-2xl">domain</span>
-              </div>
-              <h1 className="text-xl font-bold tracking-tight text-primary">ImmoAlgeria</h1>
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
             </Link>
             <nav className="hidden items-center gap-8 lg:flex">
               <Link to="/" className="text-sm font-semibold text-primary">Home</Link>
@@ -375,14 +368,7 @@ export default function Home({ user, onLogout }) {
             <div className="grid gap-12 lg:grid-cols-4">
               <div>
                 <div className="flex items-center gap-3">
-<<<<<<< HEAD
                   <img src="/logo_x.png" alt="Immo DZ" className="h-10 w-auto object-contain" />
-=======
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
-                    <span className="material-symbols-outlined text-2xl">domain</span>
-                  </div>
-                  <h2 className="text-xl font-bold">ImmoAlgeria</h2>
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
                 </div>
                 <p className="mt-6 text-sm leading-relaxed text-slate-400">
                   The most trusted real estate platform in Algeria.
@@ -391,11 +377,8 @@ export default function Home({ user, onLogout }) {
               {/* Footer Links could go here */}
             </div>
             <div className="mt-20 border-t border-slate-800 pt-10 text-center text-sm text-slate-500">
-<<<<<<< HEAD
               <p>© 2026 Immo DZ. All rights reserved.</p>
-=======
-              <p>© 2026 ImmoAlgeria. All rights reserved.</p>
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
+              <p>© 2026 Immo DZ. All rights reserved.</p>
             </div>
           </div>
         </footer>
