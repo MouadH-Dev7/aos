@@ -41,7 +41,7 @@ services:
     name: immo-dz-auth
     plan: starter
     region: frankfurt
-    rootDir: services/auth-service
+    rootDir: aos_projet/services/auth-service
     healthCheckPath: /health/
     autoDeployTrigger: commit
     envVars:
@@ -68,7 +68,7 @@ services:
     name: immo-dz-account
     plan: starter
     region: frankfurt
-    rootDir: services/account-service
+    rootDir: aos_projet/services/account-service
     healthCheckPath: /health/
     autoDeployTrigger: commit
     envVars:
@@ -91,7 +91,7 @@ services:
     name: immo-dz-location
     plan: starter
     region: frankfurt
-    rootDir: services/location-service
+    rootDir: aos_projet/services/location-service
     healthCheckPath: /health/
     autoDeployTrigger: commit
     envVars:
@@ -119,7 +119,7 @@ services:
     name: immo-dz-listing
     plan: starter
     region: frankfurt
-    rootDir: services/listing-service
+    rootDir: aos_projet/services/listing-service
     healthCheckPath: /health/
     autoDeployTrigger: commit
     envVars:
@@ -149,7 +149,7 @@ services:
     name: immo-dz-admin-validation
     plan: starter
     region: frankfurt
-    rootDir: services/admin-validation-service
+    rootDir: aos_projet/services/admin-validation-service
     healthCheckPath: /health/
     autoDeployTrigger: commit
     envVars:
@@ -176,7 +176,7 @@ services:
     name: immo-dz-notification-worker
     plan: starter
     region: frankfurt
-    rootDir: services/notification-worker
+    rootDir: aos_projet/services/notification-worker
     autoDeployTrigger: commit
     envVars:
       - key: RABBITMQ_URL
