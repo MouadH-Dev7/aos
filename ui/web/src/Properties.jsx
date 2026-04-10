@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { cachedFetchJson, peekCachedJson } from "./utils/apiCache";
 
+const isPublishedListing = (item) => {
+  const status = String(item?.status_name || "").toLowerCase();
+  return status === "active" || status === "approved";
+};
+
 export default function Properties({
   user,
   onLogin,
@@ -22,7 +27,7 @@ export default function Properties({
 
   const cachedListings = peekCachedJson(`${listingBaseUrl}/properties/list/`, { ttlMs: 60000 });
   const cachedActiveListings = Array.isArray(cachedListings)
-    ? cachedListings.filter((item) => (item.status_name || "").toLowerCase() === "active")
+    ? cachedListings.filter(isPublishedListing)
     : [];
   const initialListings = cachedActiveListings;
   const [listings, setListings] = useState(initialListings);
@@ -69,9 +74,7 @@ export default function Properties({
         ]);
         if (!isMounted) return;
         const allListings = Array.isArray(propertiesData) ? propertiesData : [];
-        const activeOnly = allListings.filter(
-          (item) => (item.status_name || "").toLowerCase() === "active"
-        );
+        const activeOnly = allListings.filter(isPublishedListing);
         setListings(activeOnly);
         setTypes(typesData || []);
         setAmenities(amenitiesData || []);

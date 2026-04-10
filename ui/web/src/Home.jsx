@@ -2,6 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { cachedFetchJson, peekCachedJson } from "./utils/apiCache";
 
+const isPublishedListing = (item) => {
+  const status = String(item?.status_name || "").toLowerCase();
+  return status === "active" || status === "approved";
+};
+
 export default function Home({ user, onLogout }) {
   const navigate = useNavigate();
   const LISTING_BASE_URL = import.meta.env.VITE_LISTING_BASE_URL || "http://localhost:8004";
@@ -10,7 +15,7 @@ export default function Home({ user, onLogout }) {
   
   const cachedListings = peekCachedJson(`${LISTING_BASE_URL}/properties/list/`, { ttlMs: 60000 });
   const cachedActiveListings = Array.isArray(cachedListings)
-    ? cachedListings.filter((item) => (item.status_name || "").toLowerCase() === "active")
+    ? cachedListings.filter(isPublishedListing)
     : [];
   const [activeListings, setActiveListings] = useState(cachedActiveListings);
   const [loadingListings, setLoadingListings] = useState(cachedActiveListings.length === 0);
@@ -30,7 +35,7 @@ export default function Home({ user, onLogout }) {
       try {
         const data = await cachedFetchJson(`${LISTING_BASE_URL}/properties/list/`, { ttlMs: 60000 });
         const all = Array.isArray(data) ? data : [];
-        const active = all.filter((item) => (item.status_name || "").toLowerCase() === "active");
+        const active = all.filter(isPublishedListing);
         if (!ignore) {
           setActiveListings(active);
         }
