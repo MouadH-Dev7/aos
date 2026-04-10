@@ -32,14 +32,8 @@ def _listing_bases():
         "LISTING_BASE_URLS",
         "LISTING_BASE_URL",
         [
-<<<<<<< HEAD
             "http://localhost:8004",
-            "https://immo-dz-listing.onrender.com",
-=======
-            "http://listing-service:8000",
-            "http://localhost:8004",
-            "http://host.docker.internal:8004",
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
+            "https://listing-service-9ma6.onrender.com",
         ],
     )
 
@@ -49,14 +43,8 @@ def _auth_bases():
         "AUTH_BASE_URLS",
         "AUTH_BASE_URL",
         [
-<<<<<<< HEAD
             "http://localhost:8001",
-            "https://immo-dz-auth.onrender.com",
-=======
-            "http://auth-service:8000",
-            "http://localhost:8001",
-            "http://host.docker.internal:8001",
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
+            "https://auth-service-56qw.onrender.com",
         ],
     )
 
@@ -120,7 +108,7 @@ def _forward(method, path, query_params=None, body=None, bases=None, extra_heade
         except error.HTTPError as exc:
             last_http_error = (exc, _parse_body(exc))
             continue
-        except Exception as exc:  # pragma: no cover - network fallback
+        except Exception as exc:
             last_network_error = str(exc)
             continue
 

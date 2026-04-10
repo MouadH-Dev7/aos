@@ -1,15 +1,11 @@
 from pathlib import Path
 import os
 
-<<<<<<< HEAD
 import dj_database_url
 
-=======
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load local .env file (if present) so commands like `manage.py migrate`
-# work without requiring manual export of environment variables.
+
 def _load_local_env():
     env_path = BASE_DIR / ".env"
     if not env_path.exists():
@@ -24,7 +20,6 @@ def _load_local_env():
 
 _load_local_env()
 
-<<<<<<< HEAD
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-secret-change-me")
 DEBUG = os.getenv("DJANGO_DEBUG", "false").lower() == "true"
 ALLOWED_HOSTS = [
@@ -32,18 +27,13 @@ ALLOWED_HOSTS = [
     for item in os.getenv("ALLOWED_HOSTS", ".onrender.com,localhost,127.0.0.1").split(",")
     if item.strip()
 ]
-=======
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-secret")
-DEBUG = os.getenv("DJANGO_DEBUG", "true").lower() == "true"
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
 
 CORS_ALLOW_ALL_ORIGINS = os.getenv("CORS_ALLOW_ALL_ORIGINS", "false").lower() == "true"
 CORS_ALLOWED_ORIGINS = [
     item.strip()
     for item in os.getenv(
         "CORS_ALLOWED_ORIGINS",
-        "http://localhost:5173,http://localhost:5174,http://localhost:5175",
+        "http://localhost:5173,http://localhost:5174,http://localhost:5175,https://web-bm0c.onrender.com,https://admin-ga8i.onrender.com",
     ).split(",")
     if item.strip()
 ]
@@ -92,10 +82,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-DATABASES = {
-<<<<<<< HEAD
-    "default": {}
-}
+DATABASES = {"default": {}}
 
 DB_CONN_MAX_AGE = int(os.getenv("DB_CONN_MAX_AGE", "120"))
 DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
@@ -106,23 +93,14 @@ if DATABASE_URL:
     DATABASES["default"] = default_db
 else:
     DATABASES["default"] = {
-=======
-    "default": {
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
         "ENGINE": "django_prometheus.db.backends.postgresql",
         "NAME": os.getenv("DB_NAME", ""),
         "USER": os.getenv("DB_USER", "postgres"),
         "PASSWORD": os.getenv("DB_PASSWORD", "postgres"),
         "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": os.getenv("DB_PORT", "5432"),
-<<<<<<< HEAD
         "CONN_MAX_AGE": DB_CONN_MAX_AGE,
     }
-=======
-        "CONN_MAX_AGE": int(os.getenv("DB_CONN_MAX_AGE", "120")),
-    }
-}
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
 
 LANGUAGE_CODE = "fr-fr"
 TIME_ZONE = "Africa/Algiers"
@@ -131,13 +109,12 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-<<<<<<< HEAD
 
 CSRF_TRUSTED_ORIGINS = [
     item.strip()
     for item in os.getenv(
         "CSRF_TRUSTED_ORIGINS",
-        "http://localhost:5173,http://localhost:5174,http://localhost:5175,https://*.onrender.com",
+        "http://localhost:5173,http://localhost:5174,http://localhost:5175,https://web-bm0c.onrender.com,https://admin-ga8i.onrender.com,https://*.onrender.com",
     ).split(",")
     if item.strip()
 ]
@@ -147,5 +124,3 @@ if not DEBUG:
     USE_X_FORWARDED_HOST = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-=======
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08

@@ -289,14 +289,8 @@ class PropertyListView(ListAPIView):
         bases = [item.strip().rstrip("/") for item in raw_list.split(",") if item.strip()]
         single = (os.getenv("AUTH_BASE_URL") or "").strip().rstrip("/")
         defaults = [
-<<<<<<< HEAD
             "http://localhost:8001",
-            "https://immo-dz-auth.onrender.com",
-=======
-            "http://auth-service:8000",
-            "http://localhost:8001",
-            "http://host.docker.internal:8001",
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
+            "https://auth-service-56qw.onrender.com",
         ]
         candidates = [*bases, single, *defaults]
         unique = []
@@ -331,10 +325,7 @@ class PropertyListView(ListAPIView):
     def get_queryset(self):
         queryset = Property.objects.all().order_by("-created_at")
         user_id = (self.request.query_params.get("user_id") or "").strip()
-<<<<<<< HEAD
         search = (self.request.query_params.get("search") or "").strip()
-=======
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
         status_name = (self.request.query_params.get("status") or "").strip()
         include_all = (self.request.query_params.get("include_all") or "").strip().lower() in (
             "1",
@@ -365,7 +356,6 @@ class PropertyListView(ListAPIView):
                     allow_private_user = True
         if user_id:
             queryset = queryset.filter(user_id=user_id)
-<<<<<<< HEAD
         if search:
             queryset = queryset.filter(
                 Q(title__icontains=search)
@@ -373,8 +363,6 @@ class PropertyListView(ListAPIView):
                 | Q(category__name__icontains=search)
                 | Q(type__name__icontains=search)
             )
-=======
->>>>>>> 0a3aee41df08352ed85b07b5fe48d7f19cfc7a08
         if status_name:
             queryset = queryset.filter(status__name__iexact=status_name)
         elif not user_id and not include_all:

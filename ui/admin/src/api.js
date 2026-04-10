@@ -25,16 +25,19 @@ export const fetchWithFallback = async (baseUrls, path, options) => {
 };
 
 export const AUTH_BASE_URLS = buildBaseCandidates(import.meta.env.VITE_AUTH_BASE_URL, [
+  "https://auth-service-56qw.onrender.com",
   "http://localhost:8080/api/auth",
   "http://localhost:8001",
 ]);
 
 export const LISTING_BASE_URLS = buildBaseCandidates(import.meta.env.VITE_LISTING_BASE_URL, [
+  "https://listing-service-9ma6.onrender.com",
   "http://localhost:8080/api/listing",
   "http://localhost:8004",
 ]);
 
 export const ADMIN_BASE_URLS = buildBaseCandidates(import.meta.env.VITE_ADMIN_BASE_URL, [
+  "https://admin-validation-service.onrender.com",
   "http://localhost:8080/api/admin",
   "http://localhost:8005",
 ]);
