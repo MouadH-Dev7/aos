@@ -49,30 +49,34 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _openDashboard() {
+  Future<void> _openDashboard() async {
     if (widget.user.isGuest) {
       Navigator.of(context).pushNamed(AppRoutes.login);
       return;
     }
 
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => AccountDashboardPage(user: widget.user),
       ),
     );
+    if (!mounted) return;
+    await _reloadHomeFeed();
   }
 
-  void _openAddProperty() {
+  Future<void> _openAddProperty() async {
     if (widget.user.isGuest) {
       Navigator.of(context).pushNamed(AppRoutes.login);
       return;
     }
 
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => AddPropertyPage(user: widget.user),
       ),
     );
+    if (!mounted) return;
+    await _reloadHomeFeed();
   }
 
   Future<void> _reloadHomeFeed() async {
@@ -83,12 +87,14 @@ class _HomePageState extends State<HomePage> {
     await future;
   }
 
-  void _openPropertyDetails(int propertyId) {
-    Navigator.of(context).push(
+  Future<void> _openPropertyDetails(int propertyId) async {
+    await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => PropertyDetailsPage(propertyId: propertyId),
       ),
     );
+    if (!mounted) return;
+    await _reloadHomeFeed();
   }
 
   @override
@@ -133,11 +139,10 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 const SizedBox(height: 32),
                                 const SectionHeader(
-                                  eyebrow: 'Curated picks',
-                                  title: 'Featured opportunities',
+                                  eyebrow: 'Top Picks',
+                                  title: 'Featured Homes',
                                   subtitle:
-                                      'Live listings pulled from the same API used by the web app.',
-                                  actionLabel: 'Refresh',
+                                      'Discover standout properties selected to help you find the right place faster.',
                                 ),
                                 const SizedBox(height: 16),
                                 if (snapshot.connectionState ==
@@ -168,10 +173,10 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   const SizedBox(height: 34),
                                   const SectionHeader(
-                                    eyebrow: 'Suggested for you',
-                                    title: 'Recommended for you',
+                                    eyebrow: 'Handpicked For You',
+                                    title: 'Homes You May Love',
                                     subtitle:
-                                        'Fresh cards powered by your listing API, not local mock data.',
+                                        'Explore attractive opportunities matched to the way people search and live.',
                                   ),
                                   const SizedBox(height: 16),
                                 ],
@@ -258,7 +263,11 @@ class _HomePageState extends State<HomePage> {
                   onOpenProperty: _openPropertyDetails,
                 ),
               ),
-            );
+            ).then((_) {
+              if (mounted) {
+                _reloadHomeFeed();
+              }
+            });
             return;
           }
           if (index == 2) {

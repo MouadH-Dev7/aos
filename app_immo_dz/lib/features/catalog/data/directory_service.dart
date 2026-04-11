@@ -17,9 +17,7 @@ class DirectoryService {
 
   static const _accountBaseUrls = [
     String.fromEnvironment('ACCOUNT_BASE_URL'),
-    'http://192.168.100.6:8080/api/account',
-    'http://192.168.100.6:8002',
-    'http://10.0.2.2:8080/api/account',
+    'https://account-service-jdqy.onrender.com',
   ];
 
   Future<List<DirectoryEntry>> fetchAgencies() {
@@ -173,6 +171,9 @@ class DirectoryService {
 
   String? _mapAuthBaseToAccountBase(String? authBaseUrl) {
     if (authBaseUrl == null || authBaseUrl.isEmpty) return null;
+    if (authBaseUrl.contains('auth-service-56qw.onrender.com')) {
+      return 'https://account-service-jdqy.onrender.com';
+    }
     if (authBaseUrl.contains('/api/auth')) {
       return authBaseUrl.replaceFirst('/api/auth', '/api/account');
     }
@@ -184,9 +185,11 @@ class DirectoryService {
 
   Future<void> _rememberAccountBaseUrl(String baseUrl) async {
     final prefs = await SharedPreferences.getInstance();
-    final authBase = baseUrl.contains('/api/account')
-        ? baseUrl.replaceFirst('/api/account', '/api/auth')
-        : baseUrl.replaceFirst(':8002', ':8001');
+    final authBase = baseUrl.contains('account-service-jdqy.onrender.com')
+        ? 'https://auth-service-56qw.onrender.com'
+        : baseUrl.contains('/api/account')
+            ? baseUrl.replaceFirst('/api/account', '/api/auth')
+            : baseUrl.replaceFirst(':8002', ':8001');
     await prefs.setString(_preferredBaseUrlKey, authBase);
   }
 

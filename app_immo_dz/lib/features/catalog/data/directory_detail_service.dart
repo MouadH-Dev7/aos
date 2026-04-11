@@ -72,9 +72,7 @@ class DirectoryDetailService {
 
   static const _listingBaseUrls = [
     String.fromEnvironment('LISTING_BASE_URL'),
-    'http://192.168.100.6:8080/api/listing',
-    'http://192.168.100.6:8004',
-    'http://10.0.2.2:8080/api/listing',
+    'https://listing-service-9ma6.onrender.com',
   ];
 
   Future<DirectoryDetailBundle> fetchBundle(DirectoryEntry entry) async {
@@ -207,6 +205,9 @@ class DirectoryDetailService {
 
   String? _mapAuthBaseToListingBase(String? authBaseUrl) {
     if (authBaseUrl == null || authBaseUrl.isEmpty) return null;
+    if (authBaseUrl.contains('auth-service-56qw.onrender.com')) {
+      return 'https://listing-service-9ma6.onrender.com';
+    }
     if (authBaseUrl.contains('/api/auth')) {
       return authBaseUrl.replaceFirst('/api/auth', '/api/listing');
     }
@@ -218,9 +219,11 @@ class DirectoryDetailService {
 
   Future<void> _rememberListingBaseUrl(String baseUrl) async {
     final prefs = await SharedPreferences.getInstance();
-    final authBase = baseUrl.contains('/api/listing')
-        ? baseUrl.replaceFirst('/api/listing', '/api/auth')
-        : baseUrl.replaceFirst(':8004', ':8001');
+    final authBase = baseUrl.contains('listing-service-9ma6.onrender.com')
+        ? 'https://auth-service-56qw.onrender.com'
+        : baseUrl.contains('/api/listing')
+            ? baseUrl.replaceFirst('/api/listing', '/api/auth')
+            : baseUrl.replaceFirst(':8004', ':8001');
     await prefs.setString(_preferredBaseUrlKey, authBase);
   }
 

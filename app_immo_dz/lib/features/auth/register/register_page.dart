@@ -455,9 +455,14 @@ class _RegisterPageState extends State<RegisterPage> {
       _locationsError = null;
     });
     try {
-      final wilayas = await _authService.fetchWilayas();
-      final dairas = await _authService.fetchDairas();
-      final communes = await _authService.fetchCommunes();
+      final results = await Future.wait([
+        _authService.fetchWilayas(),
+        _authService.fetchDairas(),
+        _authService.fetchCommunes(),
+      ]);
+      final wilayas = results[0];
+      final dairas = results[1];
+      final communes = results[2];
       if (!mounted) return;
       setState(() {
         _wilayas = wilayas;

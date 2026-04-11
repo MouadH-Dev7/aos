@@ -11,7 +11,8 @@ class AuthService {
   AuthService({http.Client? client}) : _client = client ?? http.Client();
 
   final http.Client _client;
-  static const Duration _requestTimeout = Duration(seconds: 4);
+  // Render services can take a few extra seconds to wake up after inactivity.
+  static const Duration _requestTimeout = Duration(seconds: 12);
 
   static const _accessTokenKey = 'auth.access_token';
   static const _refreshTokenKey = 'auth.refresh_token';
@@ -21,23 +22,17 @@ class AuthService {
 
   static const _defaultBaseUrls = [
     String.fromEnvironment('AUTH_BASE_URL'),
-    'http://192.168.100.6:8080/api/auth',
-    'http://192.168.100.6:8001',
-    'http://10.0.2.2:8080/api/auth',
+    'https://auth-service-56qw.onrender.com',
   ];
 
   static const _defaultAccountBaseUrls = [
     String.fromEnvironment('ACCOUNT_BASE_URL'),
-    'http://192.168.100.6:8080/api/account',
-    'http://192.168.100.6:8002',
-    'http://10.0.2.2:8080/api/account',
+    'https://account-service-jdqy.onrender.com',
   ];
 
   static const _defaultLocationBaseUrls = [
     String.fromEnvironment('LOCATION_BASE_URL'),
-    'http://192.168.100.6:8080/api/location',
-    'http://192.168.100.6:8003',
-    'http://10.0.2.2:8080/api/location',
+    'https://location-service-vmm4.onrender.com',
   ];
 
   Future<AuthSession> login({
@@ -374,15 +369,24 @@ class AuthService {
 
   String? _mapAuthBaseToAccountBase(String? authBaseUrl) {
     if (authBaseUrl == null || authBaseUrl.isEmpty) return null;
+    if (authBaseUrl.contains('auth-service-56qw.onrender.com')) {
+      return 'https://account-service-jdqy.onrender.com';
+    }
     return authBaseUrl.replaceFirst('/api/auth', '/api/account');
   }
 
   String? _mapAuthBaseToLocationBase(String? authBaseUrl) {
     if (authBaseUrl == null || authBaseUrl.isEmpty) return null;
+    if (authBaseUrl.contains('auth-service-56qw.onrender.com')) {
+      return 'https://location-service-vmm4.onrender.com';
+    }
     return authBaseUrl.replaceFirst('/api/auth', '/api/location');
   }
 
   String _mapLocationBaseToAuthBase(String locationBaseUrl) {
+    if (locationBaseUrl.contains('location-service-vmm4.onrender.com')) {
+      return 'https://auth-service-56qw.onrender.com';
+    }
     return locationBaseUrl.replaceFirst('/api/location', '/api/auth');
   }
 }

@@ -7,6 +7,8 @@ import '../auth/data/auth_models.dart';
 import '../auth/data/auth_service.dart';
 import '../catalog/listings_shell_page.dart';
 import '../property_details/property_details_page.dart';
+import 'account_settings_page.dart';
+import 'my_listings_page.dart';
 import 'data/account_dashboard_service.dart';
 
 class AccountDashboardPage extends StatefulWidget {
@@ -20,15 +22,17 @@ class AccountDashboardPage extends StatefulWidget {
 
 class _AccountDashboardPageState extends State<AccountDashboardPage> {
   late Future<AccountDashboardData> _dashboardFuture;
+  late AuthUser _currentUser;
 
   @override
   void initState() {
     super.initState();
+    _currentUser = widget.user;
     _dashboardFuture = _loadDashboard();
   }
 
   Future<AccountDashboardData> _loadDashboard() {
-    return AccountDashboardService().fetchDashboard(widget.user);
+    return AccountDashboardService().fetchDashboard(_currentUser);
   }
 
   Future<void> _refreshDashboard() async {
@@ -49,6 +53,18 @@ class _AccountDashboardPageState extends State<AccountDashboardPage> {
   }
 
   void _openListings({int initialIndex = 0}) {
+    if (initialIndex == 0) {
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => MyListingsPage(user: _currentUser),
+        ),
+      ).then((_) {
+        if (mounted) {
+          _refreshDashboard();
+        }
+      });
+      return;
+    }
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => ListingsShellPage(
@@ -56,15 +72,23 @@ class _AccountDashboardPageState extends State<AccountDashboardPage> {
           initialIndex: initialIndex,
         ),
       ),
-    );
+    ).then((_) {
+      if (mounted) {
+        _refreshDashboard();
+      }
+    });
   }
 
   void _openAddProperty() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (_) => AddPropertyPage(user: widget.user),
+        builder: (_) => AddPropertyPage(user: _currentUser),
       ),
-    );
+    ).then((_) {
+      if (mounted) {
+        _refreshDashboard();
+      }
+    });
   }
 
   void _openPropertyDetails(int propertyId) {
@@ -72,68 +96,32 @@ class _AccountDashboardPageState extends State<AccountDashboardPage> {
       MaterialPageRoute<void>(
         builder: (_) => PropertyDetailsPage(propertyId: propertyId),
       ),
-    );
+    ).then((_) {
+      if (mounted) {
+        _refreshDashboard();
+      }
+    });
   }
 
-  void _showComingSoon(String label) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$label will be available soon.')),
+  Future<void> _showAccountSettings() async {
+    final updatedUser = await Navigator.of(context).push<AuthUser>(
+      MaterialPageRoute<AuthUser>(
+        builder: (_) => AccountSettingsPage(user: _currentUser),
+      ),
     );
-  }
-
-  void _showAccountSettings() {
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-          ),
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 30),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Account details',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
-              ),
-              const SizedBox(height: 18),
-              _SettingLine(label: 'Name', value: widget.user.name),
-              _SettingLine(label: 'Email', value: widget.user.email),
-              _SettingLine(
-                label: 'Phone',
-                value: widget.user.phone.isEmpty ? 'Not provided' : widget.user.phone,
-              ),
-              _SettingLine(
-                label: 'Account type',
-                value: widget.user.roleName.isEmpty ? 'Member' : widget.user.roleName,
-              ),
-              const SizedBox(height: 18),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Close'),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+    if (updatedUser == null || !mounted) return;
+    setState(() {
+      _currentUser = updatedUser;
+    });
+    await _refreshDashboard();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final initials = widget.user.name.trim().isEmpty
+    final initials = _currentUser.name.trim().isEmpty
         ? 'A'
-        : widget.user.name.trim().characters.first.toUpperCase();
+        : _currentUser.name.trim().characters.first.toUpperCase();
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FB),
@@ -195,7 +183,7 @@ class _AccountDashboardPageState extends State<AccountDashboardPage> {
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.fromLTRB(24, 18, 24, 120),
               children: [
-                _ProfileHero(user: widget.user),
+                _ProfileHero(user: _currentUser),
                 const SizedBox(height: 24),
                 if (snapshot.connectionState == ConnectionState.waiting &&
                     !snapshot.hasData)
@@ -207,10 +195,6 @@ class _AccountDashboardPageState extends State<AccountDashboardPage> {
                   )
                 else ...[
                   _StatsSection(data: snapshot.data!),
-                  const SizedBox(height: 20),
-                  _PrimaryActionButton(
-                    onTap: _openAddProperty,
-                  ),
                   const SizedBox(height: 28),
                   const _SectionTitle(title: 'Management'),
                   const SizedBox(height: 12),
@@ -471,35 +455,6 @@ class _CompactStatCard extends StatelessWidget {
   }
 }
 
-class _PrimaryActionButton extends StatelessWidget {
-  const _PrimaryActionButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: FilledButton.icon(
-        onPressed: onTap,
-        style: FilledButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 18),
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(22),
-          ),
-        ),
-        icon: const Icon(Icons.add_circle_rounded),
-        label: const Text(
-          'Add Listing',
-          style: TextStyle(fontWeight: FontWeight.w800),
-        ),
-      ),
-    );
-  }
-}
-
 class _SectionTitle extends StatelessWidget {
   const _SectionTitle({required this.title});
 
@@ -631,6 +586,8 @@ class _ManagementTile extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: textColor,
                       fontWeight: FontWeight.w800,
@@ -657,39 +614,6 @@ class _ManagementTile extends StatelessWidget {
             const Icon(Icons.chevron_right_rounded, color: AppColors.outline),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _SettingLine extends StatelessWidget {
-  const _SettingLine({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 14),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: AppColors.onSurfaceVariant,
-                  fontWeight: FontWeight.w700,
-                ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-          ),
-        ],
       ),
     );
   }

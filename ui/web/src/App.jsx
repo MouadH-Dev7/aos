@@ -150,7 +150,7 @@ function AppRoutes({ currentUser, dashboardStats, handleLogout, handleUserUpdate
 
   return (
     <Routes>
-      {/* الصفحة الرئيسية تحتوي على الفورم الخاص بالدخول */}
+      {/* The home page includes the login form. */}
       <Route
         path="/"
         element={
@@ -168,7 +168,7 @@ function AppRoutes({ currentUser, dashboardStats, handleLogout, handleUserUpdate
         }
       />
 
-      {/* باقي الصفحات تحت هيكل الـ MainLayout */}
+      {/* The rest of the pages render inside MainLayout. */}
       <Route element={<MainLayout user={currentUser} onLogout={handleLogout} />}>
         <Route
           path="/properties"
@@ -305,7 +305,7 @@ function AppRoutes({ currentUser, dashboardStats, handleLogout, handleUserUpdate
           }
         />
 
-        {/* المسارات المحمية (Login Required) */}
+        {/* Protected routes requiring login. */}
         <Route
           path="/dashboard"
           element={
@@ -371,7 +371,7 @@ function AppRoutes({ currentUser, dashboardStats, handleLogout, handleUserUpdate
         />
       </Route>
 
-      {/* إعادة التوجيه في حال ادخال رابط خاطئ */}
+      {/* Redirect when the user enters an unknown route. */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
