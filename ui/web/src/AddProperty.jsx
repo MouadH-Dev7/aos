@@ -8,6 +8,9 @@ import { useReferenceData } from "./hooks/useReferenceData";
 
 export default function AddProperty({ user }) {
   const navigate = useNavigate();
+  const roleId = Number(user?.role_id || 0);
+  const isUnlimitedRole = roleId === 2 || roleId === 3;
+  const standardListingLimit = 2;
   
   const { categories, types, amenities, documentTypes, contactTypes, wilayas, dairas, communes, loading, loadError } = useReferenceData();
 
@@ -44,10 +47,52 @@ export default function AddProperty({ user }) {
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [listingCount, setListingCount] = useState(0);
+  const [loadingListingCount, setLoadingListingCount] = useState(false);
   
   const contactSeededRef = useRef(false);
 
   const LISTING_BASE_URL = import.meta.env.VITE_LISTING_BASE_URL || "http://localhost:8004";
+
+  useEffect(() => {
+    let ignore = false;
+    const access = localStorage.getItem("auth_access");
+
+    if (!user?.id || !access || isUnlimitedRole) {
+      setListingCount(0);
+      setLoadingListingCount(false);
+      return undefined;
+    }
+
+    const loadListingCount = async () => {
+      setLoadingListingCount(true);
+      try {
+        const response = await fetch(`${LISTING_BASE_URL}/properties/list/?user_id=${user.id}`, {
+          headers: { Authorization: `Bearer ${access}` },
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data?.detail || "Failed to load your listings.");
+        }
+        if (!ignore) {
+          setListingCount(Array.isArray(data) ? data.length : 0);
+        }
+      } catch (error) {
+        if (!ignore) {
+          setSubmitError((current) => current || error?.message || "Failed to load your listings.");
+        }
+      } finally {
+        if (!ignore) setLoadingListingCount(false);
+      }
+    };
+
+    loadListingCount();
+    return () => {
+      ignore = true;
+    };
+  }, [LISTING_BASE_URL, isUnlimitedRole, user?.id]);
+
+  const listingLimitReached = !isUnlimitedRole && listingCount >= standardListingLimit;
 
   useEffect(() => {
     const previews = imageFiles.map((file) => ({
@@ -179,6 +224,10 @@ export default function AddProperty({ user }) {
 
     if (!user?.id) {
       setSubmitError("Please login before publishing a listing.");
+      return;
+    }
+    if (listingLimitReached) {
+      setSubmitError("Standard users can publish up to 2 listings. Switch to an agency or promoter account for unlimited listings.");
       return;
     }
     if (!selectedCategory || !selectedType || !selectedCommune) {
@@ -321,6 +370,18 @@ export default function AddProperty({ user }) {
           </div>
         )}
 
+        {!isUnlimitedRole && (
+          <div className={`mb-6 rounded-lg border px-4 py-3 text-sm ${
+            listingLimitReached
+              ? "border-amber-200 bg-amber-50 text-amber-800"
+              : "border-slate-200 bg-white text-slate-600"
+          }`}>
+            {loadingListingCount
+              ? "Checking your current listing count..."
+              : `Standard account: ${listingCount}/${standardListingLimit} listings used. Agencies and promoters can publish unlimited listings.`}
+          </div>
+        )}
+
         <form className="space-y-8" onSubmit={handleSubmit}>
           <BasicInfoSection
             title={title} setTitle={setTitle}
@@ -366,7 +427,7 @@ export default function AddProperty({ user }) {
             </button>
             <button
               className="w-full sm:w-auto px-10 py-4 rounded-xl font-bold text-white bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-              disabled={submitting || loading}
+              disabled={submitting || loading || loadingListingCount || listingLimitReached}
               type="submit"
             >
               {submitting ? (

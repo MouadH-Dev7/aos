@@ -234,6 +234,9 @@ class ContactTypeListView(ListAPIView):
 class PropertyCreateView(CreateAPIView):
     serializer_class = PropertyCreateSerializer
     parser_classes = (MultiPartParser, FormParser, JSONParser)
+    STANDARD_USER_ROLE_ID = 1
+    AGENCY_ROLE_ID = 2
+    PROMOTER_ROLE_ID = 3
 
     @staticmethod
     def _auth_payload(request):
@@ -263,6 +266,24 @@ class PropertyCreateView(CreateAPIView):
         if str(user_id) != str(owner_user_id):
             raise PermissionDenied("You do not have permission to modify this listing.")
 
+    @classmethod
+    def _enforce_listing_limit(cls, token_user_id, role_id):
+        if role_id in (
+            int(os.getenv("ADMIN_ROLE_ID", "4")),
+            cls.AGENCY_ROLE_ID,
+            cls.PROMOTER_ROLE_ID,
+        ):
+            return
+        if role_id != cls.STANDARD_USER_ROLE_ID:
+            return
+
+        limit = int(os.getenv("STANDARD_USER_LISTING_LIMIT", "2"))
+        current_count = Property.objects.filter(user_id=token_user_id).count()
+        if current_count >= limit:
+            raise PermissionDenied(
+                f"Standard users can publish up to {limit} listings. Upgrade to an agency or promoter account for unlimited listings."
+            )
+
     def perform_create(self, serializer):
         payload, err = self._auth_payload(self.request)
         if err:
@@ -275,6 +296,7 @@ class PropertyCreateView(CreateAPIView):
             return created
         if not token_user_id:
             raise NotAuthenticated("Invalid token")
+        self._enforce_listing_limit(token_user_id, role_id)
         created = serializer.save(user_id=token_user_id)
         _cache_delete_pattern("listing:properties:*")
         return created
