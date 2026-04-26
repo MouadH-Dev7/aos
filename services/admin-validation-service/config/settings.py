@@ -86,13 +86,22 @@ DATABASES = {"default": {}}
 
 DB_CONN_MAX_AGE = int(os.getenv("DB_CONN_MAX_AGE", "120"))
 DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
+DB_SSLMODE = os.getenv("DB_SSLMODE", "").strip()
+
+
+def _apply_db_ssl_options(database_config):
+    sslmode = DB_SSLMODE or database_config.get("OPTIONS", {}).get("sslmode", "")
+    if sslmode:
+        database_config.setdefault("OPTIONS", {})
+        database_config["OPTIONS"]["sslmode"] = sslmode
+    return database_config
 
 if DATABASE_URL:
     default_db = dj_database_url.parse(DATABASE_URL, conn_max_age=DB_CONN_MAX_AGE)
     default_db["ENGINE"] = "django_prometheus.db.backends.postgresql"
-    DATABASES["default"] = default_db
+    DATABASES["default"] = _apply_db_ssl_options(default_db)
 else:
-    DATABASES["default"] = {
+    DATABASES["default"] = _apply_db_ssl_options({
         "ENGINE": "django_prometheus.db.backends.postgresql",
         "NAME": os.getenv("DB_NAME", ""),
         "USER": os.getenv("DB_USER", "postgres"),
@@ -100,7 +109,7 @@ else:
         "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": os.getenv("DB_PORT", "5432"),
         "CONN_MAX_AGE": DB_CONN_MAX_AGE,
-    }
+    })
 
 LANGUAGE_CODE = "fr-fr"
 TIME_ZONE = "Africa/Algiers"
