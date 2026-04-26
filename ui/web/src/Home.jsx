@@ -370,7 +370,7 @@ export default function Home({ user, onLogout }) {
 
         <footer className="bg-slate-900 px-6 py-20 text-white">
           <div className="mx-auto max-w-7xl">
-            <div className="grid gap-12 lg:grid-cols-4">
+            <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
               <div>
                 <div className="flex items-center gap-3">
                   <img src="/logo_x.png" alt="Immo DZ" className="h-10 w-auto object-contain" />
@@ -379,11 +379,49 @@ export default function Home({ user, onLogout }) {
                   The most trusted real estate platform in Algeria.
                 </p>
               </div>
-              {/* Footer Links could go here */}
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-300">Explore</h3>
+                <div className="mt-5 flex flex-col gap-3 text-sm text-slate-400">
+                  <Link to="/properties" className="transition-colors hover:text-white">Properties</Link>
+                  <Link to="/agencies" className="transition-colors hover:text-white">Agencies</Link>
+                  <Link to="/promoters" className="transition-colors hover:text-white">Promoters</Link>
+                  <Link to="/add-property" className="transition-colors hover:text-white">List Your Property</Link>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-300">Company</h3>
+                <div className="mt-5 flex flex-col gap-3 text-sm text-slate-400">
+                  <Link to="/about" className="transition-colors hover:text-white">About Us</Link>
+                  <Link to="/contact" className="transition-colors hover:text-white">Contact</Link>
+                  <Link to="/terms" className="transition-colors hover:text-white">Terms of Service</Link>
+                  <Link to="/login" className="transition-colors hover:text-white">Sign In</Link>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-300">Get Started</h3>
+                <p className="mt-5 text-sm leading-relaxed text-slate-400">
+                  Discover verified listings, trusted agencies, and new investment opportunities across Algeria.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    className="rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-primary/90"
+                    onClick={() => navigate("/properties")}
+                  >
+                    Browse Homes
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded-xl border border-slate-700 px-5 py-3 text-sm font-bold text-slate-200 transition-colors hover:border-slate-500 hover:text-white"
+                    onClick={() => navigate("/contact")}
+                  >
+                    Contact Team
+                  </button>
+                </div>
+              </div>
             </div>
             <div className="mt-20 border-t border-slate-800 pt-10 text-center text-sm text-slate-500">
-              <p>© 2026 Immo DZ. All rights reserved.</p>
-              <p>© 2026 Immo DZ. All rights reserved.</p>
+              <p>&copy; 2026 Immo DZ. All rights reserved.</p>
             </div>
           </div>
         </footer>
@@ -391,3 +429,4 @@ export default function Home({ user, onLogout }) {
     </div>
   );
 }
+

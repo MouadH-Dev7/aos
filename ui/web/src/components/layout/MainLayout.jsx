@@ -62,7 +62,7 @@ export default function MainLayout({ user, onLogout }) {
 
       <footer className="border-t border-slate-200 dark:border-slate-800 py-8 px-6 lg:px-20 bg-white dark:bg-slate-900 mt-auto">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm">
-          <p>Â© 2026 Immo DZ. All rights reserved.</p>
+          <p>&copy; 2026 Immo DZ. All rights reserved.</p>
           <div className="flex gap-6">
             <Link to="/contact" className="hover:text-primary">Contact Us</Link>
             <Link to="/terms" className="hover:text-primary">Terms of Service</Link>
@@ -72,3 +72,4 @@ export default function MainLayout({ user, onLogout }) {
     </div>
   );
 }
+
